@@ -9,6 +9,7 @@ const GUILD_ID = '1472734279892074580';
 const BRUNO_ID = '1109710874425430049';
 const BOT_ID_1 = '1472735869847998606';
 const BOT_ID_2 = '1472738254443905025';
+const BOSSCLAWD_CATEGORY_ID = '1487724556603883631';
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -72,6 +73,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         name: channelName,
         type: 0, // text channel
+        parent_id: BOSSCLAWD_CATEGORY_ID,
         topic: `🔧 BossCLAWD ${plan} — ${customerName} (${customerEmail}) — $${amount}`,
         permission_overwrites: [
           // Deny @everyone
