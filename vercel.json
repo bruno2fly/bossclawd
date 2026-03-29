@@ -4,6 +4,7 @@
     { "src": "/welcome", "dest": "/welcome.html" },
     { "src": "/consult", "dest": "/consult.html" },
     { "src": "/build", "dest": "/build.html" },
+    { "src": "/quote", "dest": "/quote.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

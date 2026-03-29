@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Done For You — Get a Quote — BossCLAWD</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#09090b;color:#a1a1aa;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:root{--accent:#f97316;--bg:#09090b;--bg2:#18181b;--border:#27272a;--border2:#3f3f46;--green:#22c55e;--text:#fafafa;--text2:#a1a1aa;--text3:#71717a}
+h1,h2,h3,.logo,.btn,.price{font-family:'Space Grotesk',sans-serif}
+.container{max-width:800px;margin:0 auto;padding:0 24px}
+a{text-decoration:none;color:inherit}
+
+.bg-glow{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+.bg-glow .orb{position:absolute;border-radius:50%;filter:blur(140px);opacity:.12}
+.bg-glow .o1{width:600px;height:600px;background:#8b5cf6;top:-200px;left:-100px;animation:drift 20s ease-in-out infinite}
+.bg-glow .o2{width:500px;height:500px;background:var(--accent);bottom:-200px;right:-100px;animation:drift 20s ease-in-out infinite reverse}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,20px)}}
+
+.content{position:relative;z-index:1}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(9,9,11,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05)}
+nav .inner{max-width:800px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-size:18px;font-weight:800;color:#fff}.logo span{color:var(--accent)}
+.back{font-size:13px;color:var(--text3);transition:.2s}.back:hover{color:#fff}
+
+.hero{padding:120px 0 60px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;border:1px solid rgba(139,92,246,.3);background:rgba(139,92,246,.08);font-size:13px;color:#a78bfa;font-weight:700;margin-bottom:24px;opacity:0;animation:fu .6s ease .2s forwards}
+.pill svg{width:16px;height:16px;stroke:#a78bfa;fill:none;stroke-width:2}
+h1{font-size:clamp(32px,5vw,48px);font-weight:800;color:#fff;letter-spacing:-2px;line-height:1.05;margin-bottom:16px;opacity:0;animation:fu .6s ease .3s forwards}
+.sub{font-size:18px;color:var(--text2);max-width:560px;margin:0 auto 40px;line-height:1.7;opacity:0;animation:fu .6s ease .4s forwards}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.price-line{font-size:14px;color:var(--text3);margin-bottom:40px;opacity:0;animation:fu .6s ease .5s forwards}
+.price-line strong{color:#fff;font-size:28px;font-family:'Space Grotesk',sans-serif}
+
+/* Form */
+.form-card{max-width:560px;margin:0 auto;background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:36px;text-align:left;opacity:0;animation:fu .6s ease .6s forwards}
+.form-card h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;text-align:center}
+.form-card .form-sub{font-size:14px;color:var(--text3);margin-bottom:28px;text-align:center}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column}
+.form-group.full{margin-bottom:14px}
+.form-group label{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:6px;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group select,.form-group textarea{font-family:'Inter',sans-serif;font-size:15px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:#fff;outline:none;transition:.2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(249,115,22,.08)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:var(--text3)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select{cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%2371717a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.form-group select option{background:var(--bg2);color:#fff}
+
+.submit-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,var(--accent),#ea580c);color:#fff;font-size:17px;font-weight:700;padding:18px;border-radius:12px;border:none;cursor:pointer;transition:.3s;font-family:'Space Grotesk',sans-serif;box-shadow:0 0 30px rgba(249,115,22,.12);margin-top:8px}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(249,115,22,.2)}
+.submit-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.form-note{font-size:12px;color:var(--text3);text-align:center;margin-top:14px}
+
+.form-success{display:none;text-align:center;padding:40px 0}
+.form-success h3{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px}
+.form-success p{font-size:15px;color:var(--text2);line-height:1.6}
+
+/* What's included */
+.section{padding:60px 0;border-top:1px solid var(--border)}
+.section h2{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:32px;text-align:center}
+.includes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.includes{grid-template-columns:1fr}}
+.inc{display:flex;gap:12px;padding:18px;background:var(--bg2);border:1px solid var(--border);border-radius:12px}
+.inc-ic{width:34px;height:34px;border-radius:8px;background:rgba(139,92,246,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.inc-ic svg{width:16px;height:16px;stroke:#a78bfa;fill:none;stroke-width:1.5}
+.inc h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;font-family:'Space Grotesk',sans-serif}
+.inc p{font-size:12px;color:var(--text2);line-height:1.5}
+
+.cases{margin-top:24px}
+.case{padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.qt{color:#a78bfa;font-size:20px;font-weight:800;font-family:'Space Grotesk',sans-serif;flex-shrink:0}
+.case-q{font-size:14px;color:var(--text);font-weight:500;font-style:italic}
+
+footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--text3)}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="bg-glow"><div class="orb o1"></div><div class="orb o2"></div></div>
+<div class="content">
+
+<nav><div class="inner"><a href="/"><div class="logo">Boss<span>CLAWD</span></div></a><a href="/" class="back">&larr; All plans</a></div></nav>
+
+<div class="hero container">
+<div class="pill"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>Done For You</div>
+<h1>A complete system — scoped to your business, built in days</h1>
+<p class="sub">Multi-integration builds, full apps, complex automation systems. We scope it, price it, and deliver it — ready to run. You own everything.</p>
+<div class="price-line">Starting at <strong>$2,500</strong> · Custom quote based on scope</div>
+</div>
+
+<div class="container" style="padding-bottom:60px">
+<div class="form-card">
+<h2>Tell us what you need</h2>
+<p class="form-sub">We'll review your request and send a custom quote within 24 hours.</p>
+<form id="quoteForm" onsubmit="return handleQuote(event)">
+<div class="form-row">
+<div class="form-group"><label>Your Name</label><input type="text" name="name" required placeholder="John Smith"></div>
+<div class="form-group"><label>Email</label><input type="email" name="email" required placeholder="john@company.com"></div>
+</div>
+<div class="form-row">
+<div class="form-group"><label>Business / Company</label><input type="text" name="business" placeholder="Your company"></div>
+<div class="form-group"><label>Budget Range</label>
+<select name="budget">
+<option value="">Select...</option>
+<option>$2,500 - $5,000</option>
+<option>$5,000 - $10,000</option>
+<option>$10,000+</option>
+<option>Not sure yet</option>
+</select>
+</div>
+</div>
+<div class="form-group full"><label>What do you want built?</label><textarea name="description" required placeholder="Describe your project in as much detail as possible. What problem are you solving? What tools do you already use? What does success look like?"></textarea></div>
+<div class="form-group full"><label>Timeline</label>
+<select name="timeline">
+<option value="">When do you need this?</option>
+<option>ASAP — this week</option>
+<option>Within 2 weeks</option>
+<option>Within a month</option>
+<option>No rush — planning ahead</option>
+</select>
+</div>
+<button type="submit" class="submit-btn" id="submitBtn">
+<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+<span id="submitText">Request Your Custom Quote</span>
+<span id="submitSpinner" style="display:none">Sending...</span>
+</button>
+<p class="form-note">No commitment required. We respond within 24 hours.</p>
+</form>
+<div class="form-success" id="formSuccess">
+<div style="width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,.1);border:2px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+</div>
+<h3>Quote request received</h3>
+<p>We'll review your project and send a custom proposal within 24 hours. Check your email.</p>
+</div>
+</div>
+</div>
+
+<div class="section container">
+<h2>What Done For You includes</h2>
+<div class="includes">
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div><h4>Complete system</h4><p>Multi-integration, multi-workflow. Not a single bot — a full system.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div><h4>Up to 5+ API integrations</h4><p>Connect all your tools into one automated pipeline.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"/></svg></div><div><h4>3 revision rounds</h4><p>We iterate until it's exactly right.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h4>7 days post-delivery support</h4><p>Questions after launch? We've got you covered.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div><div><h4>Full documentation</h4><p>How everything works, maintenance guide, training.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg></div><div><h4>Priority queue</h4><p>You skip the line. Your project starts immediately.</p></div></div>
+</div>
+
+<div class="cases" style="margin-top:32px">
+<div class="case"><span class="qt">"</span><span class="case-q">Build a client portal with login, dashboard, and automated reports</span></div>
+<div class="case"><span class="qt">"</span><span class="case-q">Set up 3 AI agents that manage my entire marketing agency</span></div>
+<div class="case"><span class="qt">"</span><span class="case-q">Build a lead capture system: landing page + chatbot + CRM integration</span></div>
+<div class="case"><span class="qt">"</span><span class="case-q">Create an inventory management system with alerts and supplier automation</span></div>
+</div>
+</div>
+
+<footer class="container">BossCLAWD by <a href="https://2flyflow.com">2FLY Digital</a> · <a href="mailto:2flydigitalmarketing@gmail.com">Contact</a></footer>
+</div>
+
+<script>
+async function handleQuote(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value, email: form.email.value,
+    business: form.business.value, budget: form.budget.value,
+    description: form.description.value, timeline: form.timeline.value,
+    type: 'done-for-you-quote', timestamp: new Date().toISOString()
+  };
+  document.getElementById('submitText').style.display='none';
+  document.getElementById('submitSpinner').style.display='inline';
+  document.getElementById('submitBtn').disabled=true;
+  try {
+    await fetch('/api/webhook', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ type:'quote_request', data: { object: { customer_details: { name: data.name, email: data.email }, metadata: data, amount_total: 0 }}})
+    });
+  } catch {}
+  form.style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+  // Fallback email
+  const subject = encodeURIComponent('BossCLAWD Quote Request: ' + data.business);
+  const body = encodeURIComponent('Name: '+data.name+'\nEmail: '+data.email+'\nBusiness: '+data.business+'\nBudget: '+data.budget+'\nProject: '+data.description+'\nTimeline: '+data.timeline);
+  const mailto = document.createElement('a');
+  mailto.href = 'mailto:2flydigitalmarketing@gmail.com?subject='+subject+'&body='+body;
+  mailto.click();
+}
+</script>
+</body>
+</html>
