@@ -297,7 +297,7 @@ footer{padding:48px 0;border-top:1px solid var(--border)}
 <div class="plan-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"/></svg></div>
 <div class="plan-name">Quick Consult</div>
 <div class="plan-desc">Strategy and planning — no building</div>
-<div class="price">$97</div>
+<div class="price">$149</div>
 <div class="price-note">One-time payment</div>
 <ul>
 <li><span class="ck">✓</span> 24-hour private chat window</li>
@@ -317,8 +317,9 @@ footer{padding:48px 0;border-top:1px solid var(--border)}
 <div class="plan-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
 <div class="plan-name">Build Session</div>
 <div class="plan-desc">1 focused project — built live</div>
-<div class="price">$297</div>
-<div class="price-note">One-time payment</div>
+<div style="font-size:18px;color:var(--text3);text-decoration:line-through;margin-bottom:4px;font-family:'Space Grotesk',sans-serif">$600</div>
+<div class="price">$497</div>
+<div class="price-note">Launch offer — save $103</div>
 <ul>
 <li><span class="ck">✓</span> 48-hour private chat window</li>
 <li><span class="ck">✓</span> 1 bot, 1 automation, or 1 dashboard</li>
@@ -337,21 +338,21 @@ footer{padding:48px 0;border-top:1px solid var(--border)}
 <div class="price-card fade-up delay-2">
 <div class="plan-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
 <div class="plan-name">Done For You</div>
-<div class="plan-desc">1 complete system — delivered ready</div>
-<div class="price">$997</div>
-<div class="price-note">One-time payment</div>
+<div class="plan-desc">Complete system — custom scope</div>
+<div class="price">Custom</div>
+<div class="price-note">Starting at $2,500</div>
 <ul>
-<li><span class="ck">✓</span> 48-hour build + 7 days support</li>
-<li><span class="ck">✓</span> 1 full system (multi-integration, up to 5 APIs)</li>
+<li><span class="ck">✓</span> Full system built + 7 days support</li>
+<li><span class="ck">✓</span> Multi-integration (up to 5+ APIs)</li>
 <li><span class="ck">✓</span> 3 rounds of revisions</li>
 <li><span class="ck">✓</span> Complete documentation + training</li>
-<li><span class="ck">✓</span> Priority queue</li>
+<li><span class="ck">✓</span> Priority queue — you skip the line</li>
 </ul>
 <div style="margin:16px 0 20px;padding:14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;text-align:left">
 <div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Perfect for</div>
 <div style="font-size:13px;color:var(--text2);line-height:1.7">"Build a client portal with login and dashboard"<br>"Set up 3 AI agents for my marketing agency"<br>"Build a lead system: landing page + bot + CRM"</div>
 </div>
-<a href="https://buy.stripe.com/28E8w04Mj9DyekI7x94gg02" class="btn-card secondary">Get Started →</a>
+<a href="#cta" class="btn-card secondary">Get a Quote →</a>
 </div>
 </div>
 </div>
@@ -482,7 +483,48 @@ footer{padding:48px 0;border-top:1px solid var(--border)}
 
 </div><!-- .content -->
 
+<!-- URGENCY POPUP -->
+<div id="urgencyPopup" style="display:none;position:fixed;bottom:24px;left:24px;z-index:200;max-width:340px;background:#18181b;border:1px solid #27272a;border-radius:14px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(249,115,22,.05);animation:slideUp .5s cubic-bezier(.16,1,.3,1);font-family:'Inter',sans-serif">
+<button onclick="this.parentElement.style.display='none'" style="position:absolute;top:10px;right:14px;background:none;border:none;color:#71717a;cursor:pointer;font-size:18px;line-height:1">&times;</button>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<div style="width:10px;height:10px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;flex-shrink:0"></div>
+<div style="font-size:13px;color:#a1a1aa" id="popupText"></div>
+</div>
+<div style="font-size:12px;color:#71717a" id="popupTime"></div>
+</div>
+<style>
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+
 <script>
+// Urgency popup system
+const popupMessages = [
+  { text: '<strong style="color:#fff">Someone from São Paulo</strong> just viewed the Build Session plan', time: '2 minutes ago' },
+  { text: '<strong style="color:#fff">A marketing agency</strong> started checkout for Quick Consult', time: '4 minutes ago' },
+  { text: '<strong style="color:#fff">Someone from Miami</strong> just visited bossclawd.com', time: '1 minute ago' },
+  { text: '<strong style="color:#fff">3 people</strong> are viewing this page right now', time: 'Live' },
+  { text: '<strong style="color:#fff">A real estate company</strong> just booked a Build Session', time: '8 minutes ago' },
+  { text: '<strong style="color:#fff">Someone from Austin</strong> just signed up for Quick Consult', time: '12 minutes ago' },
+  { text: '<strong style="color:#fff">Launch pricing ends soon</strong> — Build Session goes back to $600', time: 'Limited time' },
+  { text: '<strong style="color:#fff">A dental clinic owner</strong> just viewed Done For You', time: '3 minutes ago' },
+];
+let popupIndex = 0;
+function showPopup() {
+  const popup = document.getElementById('urgencyPopup');
+  const msg = popupMessages[popupIndex % popupMessages.length];
+  document.getElementById('popupText').innerHTML = msg.text;
+  document.getElementById('popupTime').textContent = msg.time;
+  popup.style.display = 'block';
+  popup.style.animation = 'none';
+  popup.offsetHeight; // reflow
+  popup.style.animation = 'slideUp .5s cubic-bezier(.16,1,.3,1)';
+  setTimeout(() => { popup.style.display = 'none'; }, 5000);
+  popupIndex++;
+}
+// First popup after 15 seconds, then every 25 seconds
+setTimeout(showPopup, 15000);
+setInterval(showPopup, 25000);
+
 const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target)}})},{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
 
