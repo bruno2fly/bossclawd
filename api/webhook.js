@@ -137,6 +137,19 @@ Let's go! What are we building? 🔥`;
       })
     });
 
+    // 4. Send a DM-style message in #bossclawd-welcome tagging the customer email
+    // so when they join, we can match them
+    await fetch(`https://discord.com/api/v10/channels/1487724408637358171/messages`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bot ${DISCORD_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        content: `🎫 **Session ready for ${customerName}** (${customerEmail})\n\nWhen you join, type \`!start ${customerEmail}\` and I'll take you to your private channel.\n\nOr just say hi and <@${BRUNO_ID}> will get you connected! 🔥`
+      })
+    });
+
     console.log(`✅ Created channel ${channelName} for ${customerName} ($${amount})`);
     return res.status(200).json({ success: true, channelId: channel.id });
 
