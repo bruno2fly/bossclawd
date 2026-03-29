@@ -2,6 +2,8 @@
   "routes": [
     { "src": "/api/webhook", "dest": "/api/webhook.js" },
     { "src": "/welcome", "dest": "/welcome.html" },
+    { "src": "/consult", "dest": "/consult.html" },
+    { "src": "/build", "dest": "/build.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

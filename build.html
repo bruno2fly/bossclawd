@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Session — BossCLAWD</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#09090b;color:#a1a1aa;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:root{--accent:#f97316;--bg:#09090b;--bg2:#18181b;--border:#27272a;--border2:#3f3f46;--green:#22c55e;--text:#fafafa;--text2:#a1a1aa;--text3:#71717a}
+h1,h2,h3,.logo,.btn,.price{font-family:'Space Grotesk',sans-serif}
+.container{max-width:800px;margin:0 auto;padding:0 24px}
+a{text-decoration:none;color:inherit}
+
+.bg-glow{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+.bg-glow .orb{position:absolute;border-radius:50%;filter:blur(140px);opacity:.15}
+.bg-glow .o1{width:600px;height:600px;background:var(--accent);top:-200px;left:50%;transform:translateX(-50%);animation:drift 20s ease-in-out infinite}
+.bg-glow .o2{width:400px;height:400px;background:#8b5cf6;bottom:-200px;right:-100px;animation:drift 20s ease-in-out infinite reverse}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,20px)}}
+
+.content{position:relative;z-index:1}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(9,9,11,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05)}
+nav .inner{max-width:800px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-size:18px;font-weight:800;color:#fff}.logo span{color:var(--accent)}
+.back{font-size:13px;color:var(--text3);transition:.2s}.back:hover{color:#fff}
+
+.hero{padding:120px 0 60px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;border:1px solid var(--accent);background:rgba(249,115,22,.08);font-size:13px;color:var(--accent);font-weight:700;margin-bottom:24px;opacity:0;animation:fu .6s ease .2s forwards}
+.pill svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:2}
+h1{font-size:clamp(32px,5vw,48px);font-weight:800;color:#fff;letter-spacing:-2px;line-height:1.05;margin-bottom:16px;opacity:0;animation:fu .6s ease .3s forwards}
+.sub{font-size:18px;color:var(--text2);max-width:560px;margin:0 auto 32px;line-height:1.7;opacity:0;animation:fu .6s ease .4s forwards}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.price-box{display:inline-flex;align-items:baseline;gap:12px;margin-bottom:4px;opacity:0;animation:fu .6s ease .5s forwards}
+.was{font-size:22px;color:var(--text3);text-decoration:line-through;font-family:'Space Grotesk',sans-serif}
+.amount{font-size:56px;font-weight:800;color:#fff;letter-spacing:-2px;font-family:'Space Grotesk',sans-serif}
+.price-sub{font-size:14px;color:var(--green);font-weight:600;margin-bottom:8px;opacity:0;animation:fu .6s ease .55s forwards}
+.save-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);font-size:13px;color:var(--green);font-weight:600;margin-bottom:32px;opacity:0;animation:fu .6s ease .6s forwards}
+
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--accent),#ea580c);color:#fff;font-size:18px;font-weight:700;padding:20px 48px;border-radius:12px;border:none;cursor:pointer;transition:.3s;font-family:'Space Grotesk',sans-serif;box-shadow:0 0 40px rgba(249,115,22,.15),0 4px 16px rgba(0,0,0,.3);opacity:0;animation:fu .6s ease .7s forwards}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(249,115,22,.25),0 8px 32px rgba(0,0,0,.4)}
+.cta-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2}
+.guarantee{font-size:13px;color:var(--text3);margin-top:16px;opacity:0;animation:fu .6s ease .8s forwards}
+
+.section{padding:60px 0;border-top:1px solid var(--border)}
+.section h2{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:32px;text-align:center}
+
+/* Live build demo */
+.demo-terminal{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:32px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.demo-bar{display:flex;align-items:center;gap:7px;padding:12px 18px;border-bottom:1px solid var(--border);background:var(--bg)}
+.dot{width:10px;height:10px;border-radius:50%}.dot.r{background:#ef4444}.dot.y{background:#eab308}.dot.g{background:#22c55e}
+.demo-title{margin-left:auto;margin-right:auto;font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.demo-body{padding:20px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2}
+.demo-body .ln{opacity:0;animation:fu .4s ease forwards}
+.demo-body .pr{color:var(--accent)}.demo-body .cm{color:#fff}.demo-body .st{color:#3b82f6}.demo-body .ok{color:var(--green)}
+
+.includes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.includes{grid-template-columns:1fr}}
+.inc{display:flex;gap:12px;padding:18px;background:var(--bg2);border:1px solid var(--border);border-radius:12px}
+.inc-ic{width:34px;height:34px;border-radius:8px;background:rgba(249,115,22,.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.inc-ic svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.5}
+.inc h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;font-family:'Space Grotesk',sans-serif}
+.inc p{font-size:12px;color:var(--text2);line-height:1.5}
+
+.cases{margin-top:24px}
+.case{padding:14px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.qt{color:var(--accent);font-size:20px;font-weight:800;font-family:'Space Grotesk',sans-serif;flex-shrink:0}
+.case-q{font-size:14px;color:var(--text);font-weight:500;font-style:italic}
+
+.scope-box{max-width:500px;margin:32px auto 0;padding:24px;background:var(--bg2);border:1px solid var(--border);border-radius:14px}
+.scope-box h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:16px;text-align:center;font-family:'Space Grotesk',sans-serif}
+.scope-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
+.scope-row:last-child{border-bottom:none}
+.scope-label{color:var(--text2)}.scope-val{color:#fff;font-weight:600}
+
+.bottom-cta{padding:80px 0;text-align:center}
+.bottom-cta h2{font-size:clamp(24px,4vw,36px);font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:20px}
+
+footer{padding:32px 0;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--text3)}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="bg-glow"><div class="orb o1"></div><div class="orb o2"></div></div>
+<div class="content">
+
+<nav><div class="inner"><a href="/"><div class="logo">Boss<span>CLAWD</span></div></a><a href="/" class="back">&larr; All plans</a></div></nav>
+
+<div class="hero container">
+<div class="pill"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Most Popular</div>
+<h1>We build it. You watch. It's yours in 48 hours.</h1>
+<p class="sub">One focused project — a bot, an automation, or a dashboard — built live by an AI engineer while you give feedback through chat. No code required on your end.</p>
+<div class="price-box"><span class="was">$600</span><span class="amount">$497</span></div>
+<div class="price-sub">Launch offer — limited time</div>
+<div class="save-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>You save $103</div>
+<br>
+<a href="https://buy.stripe.com/6oU4gybaH4jefoM2cP4gg01" class="cta-btn"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>Start Your Build Session</a>
+<div class="guarantee">Money-back guarantee · Secure payment via Stripe · Instant access</div>
+</div>
+
+<!-- Live demo -->
+<div class="section container">
+<h2>Watch it happen live</h2>
+<div class="demo-terminal">
+<div class="demo-bar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><div class="demo-title">build session — live</div></div>
+<div class="demo-body" id="demo"></div>
+</div>
+</div>
+
+<div class="section container">
+<h2>What's included</h2>
+<div class="includes">
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div><h4>48-hour window</h4><p>Private chat with your AI engineer for 2 full days.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div><h4>1 complete build</h4><p>One bot, automation, or dashboard — fully configured.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10z"/></svg></div><div><h4>2 revision rounds</h4><p>Not perfect? We'll adjust it twice until it is.</p></div></div>
+<div class="inc"><div class="inc-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div><div><h4>Full documentation</h4><p>How it works, how to maintain it, session transcript.</p></div></div>
+</div>
+
+<div class="cases">
+<div class="case"><span class="qt">"</span><span class="case-q">Build me a WhatsApp auto-responder for my dental clinic</span></div>
+<div class="case"><span class="qt">"</span><span class="case-q">Set up an AI that writes Instagram captions in my brand voice</span></div>
+<div class="case"><span class="qt">"</span><span class="case-q">Create a live dashboard for my Shopify store</span></div>
+<div class="case"><span class="qt">"</span><span class="case-q">Build an appointment booking bot for my website</span></div>
+</div>
+
+<div class="scope-box">
+<h3>Scope per session</h3>
+<div class="scope-row"><span class="scope-label">Projects</span><span class="scope-val">1 focused build</span></div>
+<div class="scope-row"><span class="scope-label">API integrations</span><span class="scope-val">1-2 services</span></div>
+<div class="scope-row"><span class="scope-label">Revisions</span><span class="scope-val">2 rounds</span></div>
+<div class="scope-row"><span class="scope-label">Delivery</span><span class="scope-val">Within 48 hours</span></div>
+<div class="scope-row"><span class="scope-label">You own it</span><span class="scope-val">100% yours</span></div>
+</div>
+</div>
+
+<div class="bottom-cta container">
+<h2>Your project. Built in 48 hours. Not 4 weeks.</h2>
+<a href="https://buy.stripe.com/6oU4gybaH4jefoM2cP4gg01" class="cta-btn"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>Start Building — $497</a>
+<div class="guarantee">Was $600 · Money-back guarantee · Instant access</div>
+</div>
+
+<footer class="container">BossCLAWD by <a href="https://2flyflow.com">2FLY Digital</a> · <a href="mailto:2flydigitalmarketing@gmail.com">Contact</a></footer>
+</div>
+
+<script>
+const lines = [
+  { type:'pr', text:'you →', msg:' I need a booking bot for my salon website' },
+  { type:'pr', text:'clawd →', msg:' On it. I\'ll build a chat widget with: service selection, date picker, and Google Calendar sync.' },
+  { type:'st', text:'clawd →', msg:' Connecting to Google Calendar API...' },
+  { type:'st', text:'clawd →', msg:' Building conversation flow: greeting → service → stylist → date → confirm...' },
+  { type:'st', text:'clawd →', msg:' Styling chat widget to match your site colors...' },
+  { type:'ok', text:'clawd →', msg:' Done. Chat widget embedded + booking syncs to your calendar. Test it live.' },
+  { type:'pr', text:'you →', msg:' Can the confirmation also send an SMS to the client?' },
+  { type:'st', text:'clawd →', msg:' Adding Twilio SMS confirmation...' },
+  { type:'ok', text:'clawd →', msg:' Done. Client gets SMS confirmation + reminder 1hr before appointment.' },
+];
+const demo=document.getElementById('demo');
+let i=0;
+function addLine(){
+  if(i>=lines.length)return;
+  const l=lines[i];
+  const div=document.createElement('div');
+  div.style.opacity='0';div.style.transform='translateY(8px)';div.style.transition='all .3s';
+  const pr=document.createElement('span');pr.className=l.type==='pr'?'pr':l.type==='st'?'st':'ok';pr.textContent=l.text+' ';
+  const msg=document.createElement('span');msg.className=l.type==='pr'?'cm':l.type==='st'?'st':'ok';
+  div.appendChild(pr);div.appendChild(msg);demo.appendChild(div);
+  setTimeout(()=>{div.style.opacity='1';div.style.transform='translateY(0)'},50);
+  let c=0;const t=setInterval(()=>{msg.textContent+=l.msg[c];c++;if(c>=l.msg.length){clearInterval(t);i++;setTimeout(addLine,l.type==='ok'?1200:600)}},20);
+}
+const demoObs=new IntersectionObserver(e=>{if(e[0].isIntersecting){addLine();demoObs.disconnect()}},{threshold:.3});
+demoObs.observe(demo);
+</script>
+</body>
+</html>
