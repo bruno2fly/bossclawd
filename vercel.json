@@ -1,1 +1,7 @@
-{ "routes": [{ "src": "/(.*)", "dest": "/index.html" }] }
+{
+  "routes": [
+    { "src": "/api/webhook", "dest": "/api/webhook.js" },
+    { "src": "/welcome", "dest": "/welcome.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
