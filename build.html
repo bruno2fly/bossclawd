@@ -171,5 +171,7 @@ function addLine(){
 const demoObs=new IntersectionObserver(e=>{if(e[0].isIntersecting){addLine();demoObs.disconnect()}},{threshold:.3});
 demoObs.observe(demo);
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
