@@ -213,20 +213,16 @@ footer{padding:48px 0;border-top:1px solid var(--border)}
 <div><span class="check">✓</span> Money-back guarantee</div>
 </div>
 
-<!-- Terminal -->
+<!-- Terminal with rotating scenarios -->
 <div class="terminal fade-up delay-4">
 <div class="terminal-bar">
 <div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
-<div class="terminal-title">bossclawd.com — session</div>
+<div class="terminal-title">bossclawd.com — live session</div>
 </div>
-<div class="terminal-body" id="terminal">
-<div class="line" style="animation-delay:0s"><span class="prompt">you →</span> <span class="cmd">I need an AI assistant for my real estate agency that answers leads on WhatsApp</span></div>
-<div class="line" style="animation-delay:.8s"><span class="prompt">clawd →</span> <span class="output">Got it. I'll set up: 1) WhatsApp webhook 2) AI agent with your property data 3) Auto-response system. Give me 30 min.</span></div>
-<div class="line" style="animation-delay:1.6s"><span class="prompt">clawd →</span> <span class="info">⚡ Setting up WhatsApp Business API connection...</span></div>
-<div class="line" style="animation-delay:2.4s"><span class="prompt">clawd →</span> <span class="info">🤖 Training agent on your 47 property listings...</span></div>
-<div class="line" style="animation-delay:3.2s"><span class="prompt">clawd →</span> <span class="success">✅ Done! Your WhatsApp AI agent is live. Test it: +1 (555) 123-4567</span></div>
-<div class="line" style="animation-delay:4s"><span class="prompt">you →</span> <span class="cmd">That was 22 minutes. You're insane.</span></div>
+<div class="terminal-body" id="terminal"></div>
 </div>
+<div style="text-align:center;margin-top:16px;font-size:12px;color:var(--text3)" class="fade-up delay-4">
+<span id="scenario-label">Scenario 1 of 5</span> — <span style="color:var(--accent);cursor:pointer" onclick="nextScenario()">skip →</span>
 </div>
 </div>
 </section>
@@ -480,6 +476,156 @@ footer{padding:48px 0;border-top:1px solid var(--border)}
 <script>
 const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('visible');obs.unobserve(el.target)}})},{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// === ANIMATED TERMINAL WITH ROTATING SCENARIOS ===
+const scenarios = [
+  {
+    lines: [
+      { type:'user', text:'I need an AI assistant for my real estate agency that answers leads on WhatsApp' },
+      { type:'bot', text:'Got it. I\'ll set up: 1) WhatsApp webhook 2) AI agent with your property data 3) Auto-response system. Give me 30 min.' },
+      { type:'status', text:'⚡ Setting up WhatsApp Business API connection...' },
+      { type:'status', text:'🤖 Training agent on your 47 property listings...' },
+      { type:'status', text:'🔗 Connecting auto-response pipeline...' },
+      { type:'done', text:'✅ Done! Your WhatsApp AI agent is live. Test it: +1 (555) 123-4567' },
+      { type:'user', text:'That was 22 minutes. You\'re insane.' },
+    ]
+  },
+  {
+    lines: [
+      { type:'user', text:'I run a dental clinic. Can you build me an appointment booking bot for Instagram?' },
+      { type:'bot', text:'Absolutely. I\'ll build: 1) Instagram DM auto-responder 2) Booking calendar integration 3) Confirmation messages. Starting now.' },
+      { type:'status', text:'📱 Connecting to your Instagram Business account...' },
+      { type:'status', text:'📅 Integrating with your Google Calendar...' },
+      { type:'status', text:'💬 Building conversation flow: greeting → service selection → date picker → confirmation' },
+      { type:'done', text:'✅ Live! Patients DM your Instagram → bot books appointments automatically' },
+      { type:'user', text:'My receptionist is going to cry happy tears 😭' },
+    ]
+  },
+  {
+    lines: [
+      { type:'user', text:'I need a dashboard that shows all my Shopify orders + inventory in one place' },
+      { type:'bot', text:'On it. I\'ll connect your Shopify API and build a real-time dashboard with: orders, inventory levels, revenue charts, and low-stock alerts.' },
+      { type:'status', text:'🔌 Connecting Shopify API with your store...' },
+      { type:'status', text:'📊 Building dashboard: orders table, revenue chart, inventory grid...' },
+      { type:'status', text:'🔔 Setting up low-stock email alerts (threshold: 10 units)...' },
+      { type:'done', text:'✅ Dashboard deployed! Real-time data, auto-refreshes every 5 min' },
+      { type:'user', text:'This would have cost me $5K from a dev agency. Wow.' },
+    ]
+  },
+  {
+    lines: [
+      { type:'user', text:'Can you make an AI that writes social media posts in my brand voice and schedules them?' },
+      { type:'bot', text:'Yes! I\'ll analyze your last 50 posts to learn your voice, then build an AI writer + auto-scheduler for Instagram and Facebook.' },
+      { type:'status', text:'🧠 Analyzing your brand voice from 50 recent posts...' },
+      { type:'status', text:'✍️ Building AI content generator with your tone + style...' },
+      { type:'status', text:'📅 Connecting Meta API for auto-publishing...' },
+      { type:'done', text:'✅ Your AI content engine is live. Generates 7 posts/week, auto-schedules to Meta' },
+      { type:'user', text:'I just saved my team 10 hours a week. For $297. Unreal.' },
+    ]
+  },
+  {
+    lines: [
+      { type:'user', text:'I\'m a lawyer. I need a chatbot on my website that qualifies leads and books consultations' },
+      { type:'bot', text:'Perfect use case. I\'ll build: 1) Website chat widget 2) AI that asks qualifying questions 3) Auto-books into your Calendly. Let\'s go.' },
+      { type:'status', text:'💬 Building qualification flow: practice area → urgency → budget → location...' },
+      { type:'status', text:'🔗 Connecting to Calendly API for auto-booking...' },
+      { type:'status', text:'🎨 Styling chat widget to match your website branding...' },
+      { type:'done', text:'✅ Chat widget is live on your site. Qualified leads auto-book into your calendar' },
+      { type:'user', text:'3 leads booked in the first hour. This thing pays for itself.' },
+    ]
+  }
+];
+
+let currentScenario = 0;
+let animationTimeout = null;
+const terminal = document.getElementById('terminal');
+const scenarioLabel = document.getElementById('scenario-label');
+
+function typeText(element, text, speed = 30) {
+  return new Promise(resolve => {
+    let i = 0;
+    element.textContent = '';
+    const timer = setInterval(() => {
+      element.textContent += text[i];
+      i++;
+      if (i >= text.length) { clearInterval(timer); resolve(); }
+    }, speed);
+  });
+}
+
+async function playScenario(index) {
+  const scenario = scenarios[index];
+  terminal.innerHTML = '';
+  scenarioLabel.textContent = `Scenario ${index + 1} of ${scenarios.length}`;
+
+  for (let i = 0; i < scenario.lines.length; i++) {
+    const line = scenario.lines[i];
+    const div = document.createElement('div');
+    div.style.marginBottom = '8px';
+    div.style.opacity = '0';
+    div.style.transform = 'translateY(8px)';
+    div.style.transition = 'opacity .3s, transform .3s';
+
+    const prompt = document.createElement('span');
+    const content = document.createElement('span');
+
+    if (line.type === 'user') {
+      prompt.style.color = '#f97316';
+      prompt.textContent = 'you → ';
+      content.style.color = '#fff';
+    } else if (line.type === 'bot') {
+      prompt.style.color = '#f97316';
+      prompt.textContent = 'clawd → ';
+      content.style.color = '#a1a1aa';
+    } else if (line.type === 'status') {
+      prompt.style.color = '#f97316';
+      prompt.textContent = 'clawd → ';
+      content.style.color = '#3b82f6';
+    } else if (line.type === 'done') {
+      prompt.style.color = '#f97316';
+      prompt.textContent = 'clawd → ';
+      content.style.color = '#22c55e';
+    }
+
+    div.appendChild(prompt);
+    div.appendChild(content);
+    terminal.appendChild(div);
+
+    // Fade in
+    await new Promise(r => setTimeout(r, 50));
+    div.style.opacity = '1';
+    div.style.transform = 'translateY(0)';
+
+    // Type the text
+    const speed = line.type === 'user' ? 25 : line.type === 'status' ? 15 : 20;
+    await typeText(content, line.text, speed);
+
+    // Pause between lines
+    const pause = line.type === 'done' ? 1200 : line.type === 'user' ? 800 : 500;
+    await new Promise(r => setTimeout(r, pause));
+  }
+
+  // Wait then play next
+  animationTimeout = setTimeout(() => {
+    currentScenario = (currentScenario + 1) % scenarios.length;
+    playScenario(currentScenario);
+  }, 4000);
+}
+
+function nextScenario() {
+  clearTimeout(animationTimeout);
+  currentScenario = (currentScenario + 1) % scenarios.length;
+  playScenario(currentScenario);
+}
+
+// Start when terminal is visible
+const termObs = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    playScenario(0);
+    termObs.disconnect();
+  }
+}, { threshold: 0.3 });
+termObs.observe(terminal);
 </script>
 </body>
 </html>
