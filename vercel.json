@@ -10,10 +10,5 @@
     { "src": "/quote", "dest": "/quote.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ],
-  "crons": [
-    {
-      "path": "/api/send-reminders",
-      "schedule": "0 * * * *"
-    }
-  ]
+  "crons": []
 }
