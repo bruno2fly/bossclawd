@@ -552,6 +552,24 @@
                 </div>
             </div>
 
+
+            <div class="form-group" style="margin-bottom:24px;">
+                <label style="display:block;margin-bottom:8px;font-weight:500;color:var(--text);">Preferred Language / Idioma preferido</label>
+                <div style="display:flex;gap:12px;">
+                    <label style="flex:1;cursor:pointer;">
+                        <input type="radio" name="language" value="english" checked style="display:none;" id="radio-en">
+                        <div id="lang-en" onclick="document.getElementById('radio-en').checked=true;document.getElementById('lang-en').style.borderColor='#4ade80';document.getElementById('lang-pt').style.borderColor='#333';" style="border:2px solid #4ade80;border-radius:8px;padding:14px;text-align:center;background:#1a1a1a;cursor:pointer;transition:border-color .2s;">
+                            &#127482;&#127480; <strong>English</strong>
+                        </div>
+                    </label>
+                    <label style="flex:1;cursor:pointer;">
+                        <input type="radio" name="language" value="portuguese" style="display:none;" id="radio-pt">
+                        <div id="lang-pt" onclick="document.getElementById('radio-pt').checked=true;document.getElementById('lang-pt').style.borderColor='#4ade80';document.getElementById('lang-en').style.borderColor='#333';" style="border:2px solid #333;border-radius:8px;padding:14px;text-align:center;background:#1a1a1a;cursor:pointer;transition:border-color .2s;">
+                            &#127463;&#127479; <strong>Portugu&#234;s</strong>
+                        </div>
+                    </label>
+                </div>
+            </div>
             <div class="card">
                 <h2><span class="step">2</span>Pick a Date</h2>
                 <div class="calendar-header">
