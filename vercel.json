@@ -1,6 +1,7 @@
 {
   "routes": [
     { "src": "/api/webhook", "dest": "/api/webhook.js" },
+    { "src": "/api/book-consultation", "dest": "/api/book-consultation.js" },
     { "src": "/welcome", "dest": "/welcome.html" },
     { "src": "/consult", "dest": "/consult.html" },
     { "src": "/consultation", "dest": "/consultation/index.html" },

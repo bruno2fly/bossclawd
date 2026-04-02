@@ -3,185 +3,444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Strategy Consultation | BossCLAWD</title>
+    <title>Book Your AI Strategy Consultation | BossCLAWD</title>
+    <meta name="description" content="Book a free 30-minute AI strategy consultation with BossCLAWD. Discover how AI can transform your business.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        :root {
+            --accent: #22c55e;
+            --accent2: #4ade80;
+            --accent-glow: rgba(34, 197, 94, .15);
+            --bg: #09090b;
+            --bg2: #18181b;
+            --bg3: #27272a;
+            --border: #27272a;
+            --border2: #3f3f46;
+            --text: #fafafa;
+            --text2: #a1a1aa;
+            --text3: #71717a;
+            --orange: #f97316;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text2);
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            max-width: 600px;
-            width: 100%;
-            padding: 40px;
-            text-align: center;
+
+        h1, h2, h3, .logo, .btn, .slot-day, .trust-label {
+            font-family: 'Space Grotesk', sans-serif;
         }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 30px;
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Glow background */
+        .glow-bg {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none; z-index: 0; overflow: hidden;
         }
-        
-        .emoji {
-            font-size: 48px;
-            margin-bottom: 20px;
+        .glow-bg .orb {
+            position: absolute; border-radius: 50%; filter: blur(140px); opacity: .25;
+            animation: orbFloat 20s ease-in-out infinite;
         }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 28px;
-            line-height: 1.2;
+        .orb1 { width: 500px; height: 500px; background: var(--accent); top: -150px; left: -100px; }
+        .orb2 { width: 400px; height: 400px; background: #a855f7; bottom: -150px; right: -80px; animation-delay: -7s; }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-20px, 30px) scale(.95); }
         }
-        
-        .subtitle {
-            color: #7f8c8d;
-            font-size: 18px;
-            margin-bottom: 30px;
-            line-height: 1.4;
+
+        .content { position: relative; z-index: 1; }
+
+        /* Nav */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: rgba(9, 9, 11, .85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
         }
-        
+        nav .inner {
+            max-width: 1100px; margin: 0 auto; padding: 0 28px;
+            display: flex; align-items: center; justify-content: space-between; height: 64px;
+        }
+        .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -.5px; text-decoration: none; }
+        .logo span { color: var(--orange); }
+        .nav-link { font-size: 14px; color: var(--text2); text-decoration: none; transition: color .2s; }
+        .nav-link:hover { color: #fff; }
+
+        /* Main */
+        .page { max-width: 720px; margin: 0 auto; padding: 100px 28px 60px; }
+
+        .hero { text-align: center; margin-bottom: 48px; }
+        .badge {
+            display: inline-block; font-family: 'JetBrains Mono', monospace;
+            font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--accent); background: var(--accent-glow); border: 1px solid rgba(34, 197, 94, .25);
+            padding: 6px 16px; border-radius: 100px; margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: 36px; font-weight: 800; color: var(--text); line-height: 1.15;
+            margin-bottom: 16px;
+        }
+        .hero p { font-size: 17px; color: var(--text2); max-width: 520px; margin: 0 auto; }
+
+        /* Benefits strip */
         .benefits {
-            text-align: left;
-            margin: 30px 0;
-            background: #f8f9fa;
-            padding: 25px;
+            display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+        .benefit-item {
+            display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text2);
+        }
+        .benefit-icon {
+            width: 20px; height: 20px; border-radius: 50%; background: var(--accent);
+            color: #000; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 700; flex-shrink: 0;
+        }
+
+        /* Card */
+        .card {
+            background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+            padding: 40px; margin-bottom: 32px;
+        }
+        .card h2 {
+            font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 24px;
+        }
+        .card h2 .step {
+            display: inline-block; width: 28px; height: 28px; border-radius: 50%;
+            background: var(--accent); color: #000; font-size: 14px; font-weight: 700;
+            text-align: center; line-height: 28px; margin-right: 10px;
+        }
+
+        /* Form */
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block; font-size: 13px; font-weight: 600; color: var(--text);
+            margin-bottom: 6px; letter-spacing: .3px;
+        }
+        label .optional { color: var(--text3); font-weight: 400; }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%; padding: 12px 16px; font-size: 15px; font-family: 'Inter', sans-serif;
+            background: var(--bg); border: 1px solid var(--border2); border-radius: 10px;
+            color: var(--text); outline: none; transition: border-color .2s, box-shadow .2s;
+        }
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        input::placeholder, textarea::placeholder { color: var(--text3); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        /* Time slots */
+        .slots-grid {
+            display: grid; grid-template-columns: 1fr; gap: 10px;
+        }
+        .slot-option { display: block; cursor: pointer; }
+        .slot-option input[type="radio"] { display: none; }
+        .slot-card {
+            display: flex; align-items: center; gap: 16px;
+            padding: 14px 18px; background: var(--bg); border: 1px solid var(--border2);
+            border-radius: 10px; transition: all .2s;
+        }
+        .slot-option:hover .slot-card { border-color: var(--text3); }
+        .slot-option input:checked + .slot-card {
+            border-color: var(--accent); background: rgba(34, 197, 94, .06);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .slot-radio {
+            width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border2);
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+            transition: border-color .2s;
+        }
+        .slot-option input:checked + .slot-card .slot-radio {
+            border-color: var(--accent);
+        }
+        .slot-option input:checked + .slot-card .slot-radio::after {
+            content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+        }
+        .slot-day { font-size: 14px; font-weight: 600; color: var(--text); }
+        .slot-time { font-size: 13px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+
+        /* Submit */
+        .btn-submit {
+            width: 100%; padding: 16px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px; font-weight: 700; border: none; border-radius: 12px;
+            cursor: pointer; transition: all .25s;
+            background: var(--accent); color: #000;
+            box-shadow: 0 4px 24px rgba(34, 197, 94, .25);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(34, 197, 94, .35);
+        }
+        .btn-submit:active { transform: translateY(0); }
+        .btn-submit:disabled {
+            opacity: .5; cursor: not-allowed; transform: none;
+            box-shadow: none;
+        }
+
+        /* Trust footer */
+        .trust {
+            display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+            padding: 24px 0; margin-top: 8px;
+        }
+        .trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text3); }
+        .trust-label { font-weight: 600; }
+
+        /* Success screen */
+        .success-screen {
+            display: none; text-align: center; padding: 60px 28px;
+        }
+        .success-screen.active { display: block; }
+        .success-icon {
+            width: 80px; height: 80px; border-radius: 50%; background: var(--accent-glow);
+            border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center;
+            font-size: 36px; margin: 0 auto 24px;
+        }
+        .success-screen h2 {
+            font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 12px;
+        }
+        .success-screen p {
+            font-size: 16px; color: var(--text2); max-width: 400px; margin: 0 auto 24px;
+        }
+        .success-detail {
+            display: inline-block; font-family: 'JetBrains Mono', monospace;
+            font-size: 13px; color: var(--accent); background: var(--accent-glow);
+            border: 1px solid rgba(34, 197, 94, .2); padding: 10px 20px;
             border-radius: 10px;
         }
-        
-        .benefit {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 16px;
-            color: #2c3e50;
+
+        /* Error */
+        .form-error {
+            display: none; background: rgba(239, 68, 68, .1); border: 1px solid rgba(239, 68, 68, .3);
+            color: #fca5a5; padding: 12px 16px; border-radius: 10px; font-size: 14px;
+            margin-bottom: 20px;
         }
-        
-        .benefit:last-child { margin-bottom: 0; }
-        
-        .benefit-icon {
-            background: #667eea;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 18px 40px;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin: 30px 0;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-        
-        .trust-signals {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #ecf0f1;
-            font-size: 14px;
-            color: #95a5a6;
-        }
-        
-        .trust-item {
-            display: inline-block;
-            margin: 0 15px;
-        }
-        
-        .powered-by {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #bdc3c7;
-        }
-        
+        .form-error.active { display: block; }
+
+        /* Powered by */
+        .powered { text-align: center; padding: 20px 0 40px; font-size: 12px; color: var(--text3); }
+        .powered a { color: var(--orange); text-decoration: none; }
+        .powered a:hover { text-decoration: underline; }
+
         @media (max-width: 600px) {
-            .container { padding: 30px 20px; }
-            h1 { font-size: 24px; }
-            .subtitle { font-size: 16px; }
-            .cta-button { padding: 16px 30px; font-size: 16px; }
+            .page { padding: 84px 16px 40px; }
+            .card { padding: 24px 20px; }
+            .hero h1 { font-size: 28px; }
+            .benefits { gap: 12px; }
+            .benefit-item { font-size: 13px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">BOSSCLAWD</div>
-        <div class="emoji">🤖</div>
-        
-        <h1>Free AI Strategy Consultation</h1>
-        <p class="subtitle">Discover how AI can transform your business in just 30 minutes with Boss AI</p>
-        
+
+<div class="glow-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+</div>
+
+<div class="content">
+    <nav>
+        <div class="inner">
+            <a href="/" class="logo">BOSS<span>CLAWD</span></a>
+            <a href="/" class="nav-link">Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="page" id="booking-page">
+        <div class="hero">
+            <div class="badge">Free &bull; 30 Minutes &bull; No Obligation</div>
+            <h1>Book Your AI Strategy Consultation</h1>
+            <p>Tell us what you want to build. We'll show you exactly how AI can make it happen — live, in 30 minutes.</p>
+        </div>
+
         <div class="benefits">
-            <div class="benefit">
-                <div class="benefit-icon">✓</div>
-                <span>Identify automation opportunities in your business</span>
-            </div>
-            <div class="benefit">
-                <div class="benefit-icon">✓</div>
-                <span>Explore custom AI solutions for your industry</span>
-            </div>
-            <div class="benefit">
-                <div class="benefit-icon">✓</div>
-                <span>Get actionable recommendations from our AI strategist</span>
-            </div>
-            <div class="benefit">
-                <div class="benefit-icon">✓</div>
-                <span>Receive detailed proposal within 24 hours</span>
-            </div>
+            <div class="benefit-item"><div class="benefit-icon">&#10003;</div><span>Identify automation opportunities</span></div>
+            <div class="benefit-item"><div class="benefit-icon">&#10003;</div><span>Custom AI recommendations</span></div>
+            <div class="benefit-item"><div class="benefit-icon">&#10003;</div><span>Proposal within 24 hours</span></div>
         </div>
-        
-        <a href="https://discord.gg/MeGeEggw" class="cta-button" target="_blank">
-            START MY FREE CONSULTATION 🚀
-        </a>
-        
-        <div class="trust-signals">
-            <div class="trust-item">⏰ Only 30 minutes</div>
-            <div class="trust-item">💯 Completely free</div>
-            <div class="trust-item">📋 No obligation</div>
-        </div>
-        
-        <div class="powered-by">
-            <p>Click the button above to join our consultation room and meet Boss AI instantly!</p>
+
+        <form id="booking-form" novalidate>
+            <div class="card">
+                <h2><span class="step">1</span>Your Details</h2>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="e.g. Bruno Lima" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="discord">Discord Username <span class="optional">(optional)</span></label>
+                    <input type="text" id="discord" name="discord" placeholder="e.g. bossclawd">
+                </div>
+                <div class="form-group">
+                    <label for="idea">What do you want to build?</label>
+                    <textarea id="idea" name="idea" placeholder="Describe your project idea, pain points, or what you'd like to automate..." required></textarea>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><span class="step">2</span>Choose Your Time</h2>
+                <div class="slots-grid" id="slots">
+                    <!-- Slots injected by JS -->
+                </div>
+            </div>
+
+            <div class="form-error" id="form-error"></div>
+
+            <button type="submit" class="btn-submit" id="submit-btn">Book My Session</button>
+        </form>
+
+        <div class="trust">
+            <div class="trust-item"><span>&#9200;</span> <span class="trust-label">30 min</span></div>
+            <div class="trust-item"><span>&#128175;</span> <span class="trust-label">100% free</span></div>
+            <div class="trust-item"><span>&#128274;</span> <span class="trust-label">No spam, ever</span></div>
         </div>
     </div>
-    
-    <script>
-        // Track consultation page visits
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'page_view', {
-                page_title: 'AI Consultation',
-                page_location: window.location.href
-            });
+
+    <div class="success-screen" id="success-screen">
+        <div class="success-icon">&#10003;</div>
+        <h2>Session Booked!</h2>
+        <p>You will receive a Discord invite within 5 minutes. Check your email for confirmation details.</p>
+        <div class="success-detail" id="success-slot"></div>
+        <div class="trust" style="margin-top:32px">
+            <div class="trust-item"><span>&#128232;</span> <span>Check your inbox</span></div>
+        </div>
+        <div class="powered">
+            <a href="/">Back to BossCLAWD</a>
+        </div>
+    </div>
+
+    <div class="powered" id="footer-powered">
+        Powered by <a href="/">BossCLAWD</a>
+    </div>
+</div>
+
+<script>
+(function() {
+    // Generate next 5 weekday slots (Mon-Fri), 10am-4pm EST, 30 min each
+    function generateSlots() {
+        var slots = [];
+        var now = new Date();
+        var estOffset = -5;
+        var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        // Start from tomorrow
+        var d = new Date(now);
+        d.setDate(d.getDate() + 1);
+        var times = ['10:00 AM','11:00 AM','1:00 PM','2:30 PM','3:30 PM'];
+        var count = 0;
+        while (count < 5) {
+            var dow = d.getDay();
+            if (dow >= 1 && dow <= 5) {
+                var label = dayNames[dow] + ', ' + monthNames[d.getMonth()] + ' ' + d.getDate();
+                var time = times[count % times.length];
+                slots.push({ label: label, time: time + ' EST', value: label + ' at ' + time + ' EST' });
+                count++;
+            }
+            d.setDate(d.getDate() + 1);
         }
-    </script>
+        return slots;
+    }
+
+    var slots = generateSlots();
+    var grid = document.getElementById('slots');
+    slots.forEach(function(slot, i) {
+        var html = '<label class="slot-option">' +
+            '<input type="radio" name="time_slot" value="' + slot.value + '"' + (i === 0 ? ' checked' : '') + '>' +
+            '<div class="slot-card">' +
+                '<div class="slot-radio"></div>' +
+                '<div>' +
+                    '<div class="slot-day">' + slot.label + '</div>' +
+                    '<div class="slot-time">' + slot.time + '</div>' +
+                '</div>' +
+            '</div>' +
+        '</label>';
+        grid.insertAdjacentHTML('beforeend', html);
+    });
+
+    var form = document.getElementById('booking-form');
+    var errorEl = document.getElementById('form-error');
+    var submitBtn = document.getElementById('submit-btn');
+    var bookingPage = document.getElementById('booking-page');
+    var successScreen = document.getElementById('success-screen');
+    var successSlot = document.getElementById('success-slot');
+    var footerPowered = document.getElementById('footer-powered');
+
+    function showError(msg) {
+        errorEl.textContent = msg;
+        errorEl.classList.add('active');
+    }
+    function hideError() {
+        errorEl.classList.remove('active');
+    }
+
+    function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        hideError();
+
+        var name = document.getElementById('name').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var discord = document.getElementById('discord').value.trim();
+        var idea = document.getElementById('idea').value.trim();
+        var slotEl = document.querySelector('input[name="time_slot"]:checked');
+        var time_slot = slotEl ? slotEl.value : '';
+
+        if (!name) { showError('Please enter your full name.'); return; }
+        if (!email || !isValidEmail(email)) { showError('Please enter a valid email address.'); return; }
+        if (!idea) { showError('Please describe what you want to build.'); return; }
+        if (!time_slot) { showError('Please select a time slot.'); return; }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Booking...';
+
+        fetch('/api/book-consultation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, email: email, discord: discord, idea: idea, time_slot: time_slot })
+        })
+        .then(function(res) { return res.json().then(function(data) { return { ok: res.ok, data: data }; }); })
+        .then(function(result) {
+            if (result.ok && result.data.success) {
+                bookingPage.style.display = 'none';
+                footerPowered.style.display = 'none';
+                successScreen.classList.add('active');
+                successSlot.textContent = time_slot;
+                window.scrollTo(0, 0);
+            } else {
+                showError(result.data.error || 'Something went wrong. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Book My Session';
+            }
+        })
+        .catch(function() {
+            showError('Network error. Please check your connection and try again.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Book My Session';
+        });
+    });
+
+    // Analytics
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'page_view', {
+            page_title: 'Book Consultation',
+            page_location: window.location.href
+        });
+    }
+})();
+</script>
 </body>
 </html>
