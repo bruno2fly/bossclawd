@@ -6,7 +6,23 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_FROM = process.env.TWILIO_FROM || '+13637770337';
-const BRUNO_PHONE = process.env.BRUNO_PHONE || '+17816062445';
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+async function supabaseInsert(data) {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) return null;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/bookings`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(data)
+  });
+  return res.json();
+}
 
 async function createDiscordChannel(name, topic) {
   const res = await fetch(`https://discord.com/api/v10/guilds/${DISCORD_GUILD_ID}/channels`, {
@@ -41,45 +57,50 @@ async function sendWebhookNotification(data, inviteLink) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      content: `🍌 **New Consultation Booked!**\n\n**Name:** ${data.name}\n**Email:** ${data.email}\n**Discord:** ${data.discord || 'not provided'}\n**Time:** ${data.time_slot}\n**Idea:** ${data.idea}\n\n**Session channel invite:** ${inviteLink}`
+      content: `🍌 **New Consultation Booked!**\n\n**Name:** ${data.name}\n**Email:** ${data.email}\n**Discord:** ${data.discord || 'not provided'}\n**Phone:** ${data.phone || 'not provided'}\n**Language:** ${data.language === 'portuguese' ? '🇧🇷 Português' : '🇺🇸 English'}\n**Time:** ${data.time_slot}\n**Idea:** ${data.idea}\n\n**Session invite:** ${inviteLink}`
     })
   });
 }
 
 async function sendConfirmationEmail(data, inviteLink) {
   if (!RESEND_API_KEY) return;
+  const isPT = data.language === 'portuguese';
+  const subject = isPT
+    ? `Sua sessão está confirmada — ${data.time_slot}`
+    : `Your AI Strategy Session is confirmed — ${data.time_slot}`;
+  const heading = isPT ? `🍌 Confirmado, ${data.name.split(' ')[0]}!` : `🍌 You're confirmed, ${data.name.split(' ')[0]}!`;
+  const subheading = isPT ? 'Sua sessão de estratégia com o Boss está marcada.' : 'Your AI Strategy Session with Boss is locked in.';
+  const sessionLabel = isPT ? '📅 Sua Sessão' : '📅 Your Session';
+  const ideaLabel = isPT ? '💡 O que você nos contou' : '💡 What you told us';
+  const joinLabel = isPT ? 'Entrar na sessão →' : 'Join Session →';
+  const footerNote = isPT
+    ? 'Quando entrar, diga <strong>"Estou aqui"</strong> e começamos. Temos 30 minutos para mapear exatamente o que vamos construir para você.'
+    : 'When you join, just say <strong>"I\'m here"</strong> and we\'ll kick things off. We have 30 minutes to map out exactly what we\'re building for you.';
+
   await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: 'Boss AI <hello@bossclawd.com>',
       to: [data.email],
-      subject: `Your AI Strategy Session is confirmed — ${data.time_slot}`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #fff; padding: 40px; border-radius: 12px;">
-          <h1 style="color: #4ade80; margin-bottom: 8px;">🍌 You're confirmed, ${data.name.split(' ')[0]}!</h1>
-          <p style="color: #aaa; font-size: 16px;">Your AI Strategy Session with Boss is locked in.</p>
-          
-          <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 24px; margin: 24px 0;">
-            <p style="margin: 0 0 8px; color: #4ade80; font-weight: bold;">📅 Your Session</p>
-            <p style="margin: 0; font-size: 18px;">${data.time_slot}</p>
-          </div>
-
-          <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 24px; margin: 24px 0;">
-            <p style="margin: 0 0 8px; color: #4ade80; font-weight: bold;">💡 What you told us</p>
-            <p style="margin: 0; color: #ccc;">${data.idea}</p>
-          </div>
-
-          <div style="background: #1a1a1a; border: 1px solid #4ade80; border-radius: 8px; padding: 24px; margin: 24px 0; text-align: center;">
-            <p style="margin: 0 0 16px; font-weight: bold;">Join your private session room on Discord:</p>
-            <a href="${inviteLink}" style="background: #4ade80; color: #000; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 16px;">Join Session →</a>
-          </div>
-
-          <p style="color: #666; font-size: 14px; margin-top: 32px;">When you join, just say <strong>"I'm here"</strong> and we'll kick things off. We have 30 minutes to map out exactly what we're building for you.</p>
-          
-          <p style="color: #444; font-size: 12px; margin-top: 24px;">BossCLAWD · bossclawd.com</p>
+      subject,
+      html: `<div style="font-family:sans-serif;max-width:600px;margin:0 auto;background:#0a0a0a;color:#fff;padding:40px;border-radius:12px;">
+        <h1 style="color:#4ade80;margin-bottom:8px;">${heading}</h1>
+        <p style="color:#aaa;font-size:16px;">${subheading}</p>
+        <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:24px;margin:24px 0;">
+          <p style="margin:0 0 8px;color:#4ade80;font-weight:bold;">${sessionLabel}</p>
+          <p style="margin:0;font-size:18px;">${data.time_slot}</p>
         </div>
-      `
+        <div style="background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:24px;margin:24px 0;">
+          <p style="margin:0 0 8px;color:#4ade80;font-weight:bold;">${ideaLabel}</p>
+          <p style="margin:0;color:#ccc;">${data.idea}</p>
+        </div>
+        <div style="background:#1a1a1a;border:1px solid #4ade80;border-radius:8px;padding:24px;margin:24px 0;text-align:center;">
+          <a href="${inviteLink}" style="background:#4ade80;color:#000;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:16px;">${joinLabel}</a>
+        </div>
+        <p style="color:#666;font-size:14px;margin-top:32px;">${footerNote}</p>
+        <p style="color:#444;font-size:12px;margin-top:24px;">BossCLAWD · bossclawd.com</p>
+      </div>`
     })
   });
 }
@@ -101,7 +122,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { name, email, discord, idea, time_slot } = req.body;
+  const { name, email, discord, idea, time_slot, phone, language } = req.body;
   if (!name || !email || !idea || !time_slot) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
@@ -112,25 +133,32 @@ export default async function handler(req, res) {
     const dateSlug = new Date().toISOString().slice(5, 10).replace('-', '');
     const channelName = `session-${slug}-${dateSlug}`;
     const channel = await createDiscordChannel(channelName, `🤖 ${name} — ${idea.substring(0, 60)} | ${time_slot}`);
-    
+
     // 2. Generate invite
     const inviteLink = await createDiscordInvite(channel.id);
 
-    // 3. Post welcome message in channel
-    await sendDiscordMessage(channel.id, 
-      `👋 **Welcome ${name.split(' ')[0]}!**\n\nThis is your private AI Strategy Session with **Boss** and **Bruno**.\n\n📅 **Your session:** ${time_slot}\n💡 **Your idea:** ${idea}\n\nWhen you're ready, just say **"I'm here"** and we'll kick things off. We have 30 minutes to map out exactly what we can build for you. 🍌`
-    );
+    // 3. Welcome message in channel
+    const isPT = language === 'portuguese';
+    const welcomeMsg = isPT
+      ? `👋 **Bem-vindo(a) ${name.split(' ')[0]}!**\n\nEste é seu canal privado de Sessão de Estratégia com **Boss** e **Bruno**.\n\n📅 **Sua sessão:** ${time_slot}\n💡 **Sua ideia:** ${idea}\n\nQuando estiver pronto(a), diga **"Estou aqui"** e começamos. Temos 30 minutos para mapear exatamente o que vamos construir pra você. 🍌`
+      : `👋 **Welcome ${name.split(' ')[0]}!**\n\nThis is your private AI Strategy Session with **Boss** and **Bruno**.\n\n📅 **Your session:** ${time_slot}\n💡 **Your idea:** ${idea}\n\nWhen you're ready, just say **"I'm here"** and we'll kick things off. We have 30 minutes to map out exactly what we can build for you. 🍌`;
+    await sendDiscordMessage(channel.id, welcomeMsg);
 
-    // 4. Notify Bruno via webhook (with invite link)
-    await sendWebhookNotification({ name, email, discord, idea, time_slot }, inviteLink);
+    // 4. Store in Supabase
+    await supabaseInsert({ name, email, phone: phone || null, discord: discord || null, language: language || 'english', idea, time_slot, invite_link: inviteLink, channel_id: channel.id });
 
-    // 5. Send confirmation email to client
-    await sendConfirmationEmail({ name, email, idea, time_slot }, inviteLink);
+    // 5. Notify Bruno via webhook
+    await sendWebhookNotification({ name, email, discord, phone, language, idea, time_slot }, inviteLink);
 
-    // 6. SMS to client (if phone provided)
-    const { phone } = req.body;
+    // 6. Confirmation email to client
+    await sendConfirmationEmail({ name, email, idea, time_slot, language }, inviteLink);
+
+    // 7. SMS to client if phone provided
     if (phone && phone.trim().length > 6) {
-      await sendSMS(phone.trim(), `Hey ${name.split(' ')[0]}! Your AI Strategy Session with Boss is confirmed for ${time_slot}.\n\nJoin your private session here: ${inviteLink}\n\nSee you then! — BossCLAWD`);
+      const smsMsg = isPT
+        ? `Olá ${name.split(' ')[0]}! Sua sessão com o Boss AI está confirmada para ${time_slot}.\n\nAcesse aqui: ${inviteLink}\n\nAté lá! — BossCLAWD`
+        : `Hey ${name.split(' ')[0]}! Your Boss AI session is confirmed for ${time_slot}.\n\nJoin here: ${inviteLink}\n\nSee you then! — BossCLAWD`;
+      await sendSMS(phone.trim(), smsMsg);
     }
 
     return res.status(200).json({ success: true, message: 'Booked!', invite: inviteLink });
