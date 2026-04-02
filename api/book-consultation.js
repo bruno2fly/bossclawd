@@ -105,13 +105,13 @@ async function sendConfirmationEmail(data, inviteLink) {
   });
 }
 
-async function sendSMS(to, message) {
+async function sendSMSOrWhatsApp(from, to, message) {
   if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN) return;
   const auth = Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64');
   await fetch(`https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`, {
     method: 'POST',
     headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ From: TWILIO_FROM, To: to, Body: message })
+    body: new URLSearchParams({ From: from, To: to, Body: message })
   });
 }
 

@@ -554,6 +554,21 @@
 
 
             <div class="form-group" style="margin-bottom:24px;">
+                <label style="display:block;margin-bottom:8px;font-weight:500;color:var(--text);">Contact Preference <span style="color:#666;font-weight:400;font-size:13px;">(for confirmation &amp; reminder)</span></label>
+                <div style="display:flex;gap:12px;margin-bottom:16px;">
+                    <label style="flex:1;cursor:pointer;">
+                        <input type="radio" name="contact_pref" value="sms" checked style="display:none;" id="radio-sms">
+                        <div id="pref-sms" onclick="document.getElementById('radio-sms').checked=true;document.getElementById('pref-sms').style.borderColor='#4ade80';document.getElementById('pref-whatsapp').style.borderColor='#333';" style="border:2px solid #4ade80;border-radius:8px;padding:12px;text-align:center;background:#1a1a1a;cursor:pointer;transition:border-color .2s;">
+                            📱 <strong>SMS</strong>
+                        </div>
+                    </label>
+                    <label style="flex:1;cursor:pointer;">
+                        <input type="radio" name="contact_pref" value="whatsapp" style="display:none;" id="radio-whatsapp">
+                        <div id="pref-whatsapp" onclick="document.getElementById('radio-whatsapp').checked=true;document.getElementById('pref-whatsapp').style.borderColor='#4ade80';document.getElementById('pref-sms').style.borderColor='#333';" style="border:2px solid #333;border-radius:8px;padding:12px;text-align:center;background:#1a1a1a;cursor:pointer;transition:border-color .2s;">
+                            💬 <strong>WhatsApp</strong>
+                        </div>
+                    </label>
+                </div>
                 <label style="display:block;margin-bottom:8px;font-weight:500;color:var(--text);">Preferred Language / Idioma preferido</label>
                 <div style="display:flex;gap:12px;">
                     <label style="flex:1;cursor:pointer;">
