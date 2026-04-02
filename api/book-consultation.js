@@ -127,8 +127,11 @@ export default async function handler(req, res) {
     // 5. Send confirmation email to client
     await sendConfirmationEmail({ name, email, idea, time_slot }, inviteLink);
 
-    // 6. SMS to Bruno (alert)
-    await sendSMS(BRUNO_PHONE, `🍌 New consultation booked!\n${name} | ${time_slot}\nIdea: ${idea.substring(0, 80)}`);
+    // 6. SMS to client (if phone provided)
+    const { phone } = req.body;
+    if (phone && phone.trim().length > 6) {
+      await sendSMS(phone.trim(), `Hey ${name.split(' ')[0]}! Your AI Strategy Session with Boss is confirmed for ${time_slot}.\n\nJoin your private session here: ${inviteLink}\n\nSee you then! — BossCLAWD`);
+    }
 
     return res.status(200).json({ success: true, message: 'Booked!', invite: inviteLink });
   } catch (err) {
