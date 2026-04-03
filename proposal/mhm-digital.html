@@ -212,14 +212,63 @@ Vocês fazem 10+ workshops por mês. Cada um gasta 2–3 horas de consolidação
 
 <section class="cta-section">
 <div class="container">
-<h2 class="fade-up">Pronto para seguir?</h2>
-<p class="fade-up delay-1">Responder por e-mail confirma o interesse; combinamos próximos passos e qualquer ajuste de escopo.</p>
-<a href="mailto:bruno@bossclawd.com?subject=MHM%20Digital%20%E2%80%94%20Proposta" class="btn-cta fade-up delay-2">
-Quero avançar com essa proposta
-<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
-</a>
+<div class="investimento-card fade-up" style="background:#18181b;border:1px solid #3b82f6;border-radius:16px;padding:40px;max-width:560px;margin:0 auto 48px;text-align:center;">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#3b82f6;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">Investimento</p>
+  <p style="font-family:'Space Grotesk',sans-serif;font-size:48px;font-weight:800;color:#fafafa;margin-bottom:8px;">$6.500 <span style="font-size:20px;font-weight:500;color:#a1a1aa;">USD</span></p>
+  <p style="font-size:14px;color:#71717a;margin-bottom:24px;">Fases 1, 2 e 3 completas + 3 meses de suporte e ajustes incluídos.</p>
+  <div style="display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px;background:#09090b;border-radius:10px;margin-bottom:8px;">
+    <p style="font-size:13px;color:#a1a1aa;">✓ Workshop Intelligence (Fase 1)</p>
+    <p style="font-size:13px;color:#a1a1aa;">✓ Back-office automatizado (Fase 2)</p>
+    <p style="font-size:13px;color:#a1a1aa;">✓ Notion Hub estruturado (Fase 3)</p>
+    <p style="font-size:13px;color:#a1a1aa;">✓ 3 meses de suporte pós-entrega</p>
+  </div>
+</div>
+
+<div class="fade-up delay-1" style="max-width:560px;margin:0 auto 32px;background:#18181b;border:1px solid #27272a;border-radius:12px;padding:20px 24px;">
+  <p style="font-size:13px;color:#71717a;margin-bottom:8px;">📎 Para personalizar o sistema ao seu formato MHM, envie um exemplo de output de workshop (Word ou PPT com dados fictícios). Você pode anexar na mensagem abaixo.</p>
+</div>
+
+<div id="accept-form" class="fade-up delay-2" style="max-width:560px;margin:0 auto;">
+  <form id="proposal-form" style="display:flex;flex-direction:column;gap:12px;">
+    <input type="text" id="f-name" placeholder="Seu nome" required style="background:#18181b;border:1px solid #3f3f46;border-radius:8px;padding:12px 16px;color:#fafafa;font-size:14px;font-family:'Inter',sans-serif;outline:none;">
+    <input type="email" id="f-email" placeholder="Seu e-mail" required style="background:#18181b;border:1px solid #3f3f46;border-radius:8px;padding:12px 16px;color:#fafafa;font-size:14px;font-family:'Inter',sans-serif;outline:none;">
+    <textarea id="f-msg" rows="3" placeholder="Mensagem opcional (dúvidas, ajustes, etc.)" style="background:#18181b;border:1px solid #3f3f46;border-radius:8px;padding:12px 16px;color:#fafafa;font-size:14px;font-family:'Inter',sans-serif;outline:none;resize:vertical;"></textarea>
+    <button type="submit" class="btn-cta" style="border:none;cursor:pointer;width:100%;">
+      Estou de acordo com a proposta
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <p id="form-status" style="text-align:center;font-size:13px;color:#22c55e;display:none;"></p>
+  </form>
+</div>
 </div>
 </section>
+
+<script>
+document.getElementById('proposal-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('button[type=submit]');
+  const status = document.getElementById('form-status');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  const name = document.getElementById('f-name').value;
+  const email = document.getElementById('f-email').value;
+  const msg = document.getElementById('f-msg').value;
+  try {
+    await fetch('https://discord.com/api/webhooks/1489260802056654933/PLACEHOLDER', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        content: `🍌 **Proposta MHM Digital ACEITA**\n**Nome:** ${name}\n**Email:** ${email}\n${msg ? '**Mensagem:** ' + msg : ''}`
+      })
+    });
+  } catch(err) {}
+  // Fallback: mailto
+  window.location.href = `mailto:bruno@bossclawd.com?subject=MHM%20Digital%20%E2%80%94%20Proposta%20Aceita&body=Nome%3A%20${encodeURIComponent(name)}%0AEmail%3A%20${encodeURIComponent(email)}%0A${encodeURIComponent(msg)}`;
+  status.textContent = '✓ Perfeito! Entraremos em contato em breve.';
+  status.style.display = 'block';
+  btn.textContent = 'Enviado!';
+});
+</script>
 
 <footer>
 <div class="container">
