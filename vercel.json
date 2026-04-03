@@ -3,6 +3,7 @@
     { "src": "/api/webhook", "dest": "/api/webhook.js" },
     { "src": "/api/book-consultation", "dest": "/api/book-consultation.js" },
     { "src": "/api/send-reminders", "dest": "/api/send-reminders.js" },
+    { "src": "/proposal/mhm-digital", "dest": "/proposal/mhm-digital.html" },
     { "src": "/welcome", "dest": "/welcome.html" },
     { "src": "/consult", "dest": "/consult.html" },
     { "src": "/consultation", "dest": "/consultation/index.html" },
