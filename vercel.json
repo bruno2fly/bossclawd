@@ -65,6 +65,10 @@
       "dest": "/resolute-calculator.html"
     },
     {
+      "src": "/resolute/v2",
+      "dest": "/resolute-v2.html"
+    },
+    {
       "src": "/resolute",
       "dest": "/resolute.html"
     },

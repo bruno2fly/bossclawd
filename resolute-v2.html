@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReSolute × 2FLY — A New Chapter (Light)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --black: #f5f4f0;
+    --white: #111111;
+    --green: #1a4a2e;
+    --accent: #2d7a2d;
+    --gray: #e0ddd8;
+    --mid: #666;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px;
+    position: relative;
+    border-bottom: 1px solid #ccc;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #2d7a2d;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .hero-title {
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -3px;
+    max-width: 900px;
+  }
+  .hero-title span {
+    color: #2d7a2d;
+  }
+  .hero-sub {
+    margin-top: 48px;
+    font-size: 18px;
+    color: var(--mid);
+    max-width: 520px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .hero-meta {
+    margin-top: 60px;
+    display: flex;
+    gap: 60px;
+  }
+  .hero-meta-item label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--mid);
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .hero-meta-item span {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  /* SECTION */
+  section {
+    padding: 100px 60px;
+    border-bottom: 1px solid #ccc;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #2d7a2d;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  .section-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+    margin-bottom: 32px;
+  }
+  .section-body {
+    font-size: 17px;
+    color: #777;
+    line-height: 1.8;
+    max-width: 680px;
+  }
+
+  /* DIAGNOSIS */
+  .diagnosis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .diagnosis-item {
+    background: #e8e5e0;
+    padding: 40px;
+  }
+  .diagnosis-item.highlight {
+    background: #d8eedb;
+    border-left: 3px solid #2a7a2a;
+  }
+  .diagnosis-item h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 16px;
+  }
+  .diagnosis-item p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #888;
+  }
+  .diagnosis-item .stat {
+    font-size: 42px;
+    font-weight: 700;
+    color: #2d7a2d;
+    margin-bottom: 8px;
+    letter-spacing: -2px;
+  }
+
+  /* PROBLEM */
+  .problem-statement {
+    margin-top: 48px;
+    padding: 48px;
+    background: #e0ddd8;
+    border-left: 4px solid #c0392b;
+  }
+  .problem-statement blockquote {
+    font-size: 24px;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .problem-statement cite {
+    font-size: 13px;
+    color: var(--mid);
+    font-style: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* SOLUTION PILLARS */
+  .pillars {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+  }
+  .pillar {
+    background: #e8e5e0;
+    padding: 48px 36px;
+  }
+  .pillar-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #2d7a2d;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+  }
+  .pillar h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .pillar p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+  }
+  .pillar ul {
+    margin-top: 16px;
+    padding-left: 0;
+    list-style: none;
+  }
+  .pillar ul li {
+    font-size: 14px;
+    color: #666;
+    padding: 6px 0;
+    border-bottom: 1px solid #ccc;
+    padding-left: 16px;
+    position: relative;
+  }
+  .pillar ul li::before {
+    content: '→';
+    color: #2d7a2d;
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+  }
+
+  /* DESIGN SECTION */
+  .design-showcase {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+  }
+  .design-item {
+    aspect-ratio: 3/4;
+    background: #e8e5e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .design-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .design-placeholder {
+    text-align: center;
+    color: #888;
+  }
+  .design-placeholder span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 12px;
+    color: #777;
+  }
+
+  /* OFFER */
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .offer-item {
+    background: #e8e5e0;
+    padding: 48px;
+  }
+  .offer-item h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .offer-item ul {
+    list-style: none;
+    padding: 0;
+  }
+  .offer-item ul li {
+    font-size: 15px;
+    color: #555;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .offer-item ul li::before {
+    content: '✓';
+    color: #2d7a2d;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* WHO WE ARE */
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .team-item {
+    background: #e8e5e0;
+    padding: 48px;
+  }
+  .team-item h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .team-item .role {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #2d7a2d;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .team-item p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 120px 60px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .cta-title {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 32px;
+  }
+  .cta-title span { color: #2d7a2d; }
+  .cta-sub {
+    font-size: 17px;
+    color: var(--mid);
+    margin-bottom: 48px;
+  }
+  .cta-button {
+    display: inline-block;
+    background: #2d7a2d;
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+  }
+  .cta-button:hover { opacity: 0.85; }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--mid);
+  }
+  footer .tagline {
+    font-size: 13px;
+    color: #777;
+  }
+
+  @media (max-width: 768px) {
+    .hero, section { padding: 60px 24px; }
+    .diagnosis-grid, .pillars, .offer-grid, .team-grid { grid-template-columns: 1fr; }
+    .design-showcase { grid-template-columns: 1fr 1fr; }
+    .hero-meta { flex-direction: column; gap: 24px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">2FLY Digital × ReSolute NYC — Confidential</div>
+  <img src="/resolute-logo.jpg" alt="ReSolute" style="height:48px; margin-bottom:40px; filter: invert(1); opacity:0.9;">
+  <h1 class="hero-title">Build a brand<br>that sells <span>every</span><br>party.</h1>
+  <p class="hero-sub">Not just the ones with Villalobos on the lineup. A strategy to make ReSolute the reason people show up — regardless of who's playing.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <label>Prepared for</label>
+      <span>ReSolute NYC</span>
+    </div>
+    <div class="hero-meta-item">
+      <label>Presented by</label>
+      <span>2FLY Digital Marketing</span>
+    </div>
+    <div class="hero-meta-item">
+      <label>Date</label>
+      <span>April 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- DIAGNOSIS -->
+<section>
+  <div class="section-label">01 — Where You Are Now</div>
+  <h2 class="section-title">Strong roots.<br>Untapped reach.</h2>
+  <p class="section-body">ReSolute has built something rare — a respected underground brand with world-class bookings, a record label, a booking agency, and a loyal community. The infrastructure is there. The digital amplification isn't.</p>
+  
+  <div class="diagnosis-grid">
+    <div class="diagnosis-item">
+      <h3>What's working</h3>
+      <p>35+ artist booking roster. DISDAT vinyl label. Events across NY, Detroit, London, Munich. Ricardo Villalobos, Theo Parrish, Move D on upcoming bills. Real underground credibility built over years.</p>
+    </div>
+    <div class="diagnosis-item highlight">
+      <h3>The gap</h3>
+      <p>No email capture. Content is mostly event announcements. No storytelling between parties. No community built outside of Instagram's algorithm. When the algorithm doesn't push — nothing reaches your fans.</p>
+    </div>
+    <div class="diagnosis-item highlight">
+      <div class="stat">0</div>
+      <h3>Email subscribers captured</h3>
+      <p>Every ticket buyer, every attendee — gone after the event. No direct line back to them outside of social media.</p>
+    </div>
+    <div class="diagnosis-item">
+      <h3>The real problem</h3>
+      <p>Sales depend too heavily on headline DJ name recognition. The ReSolute brand alone doesn't yet carry enough weight to sell a party independently. That's fixable.</p>
+    </div>
+  </div>
+
+  <div class="problem-statement">
+    <blockquote>"We depend on specific DJs to sell well."</blockquote>
+    <cite>— ReSolute Owner</cite>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section>
+  <div class="section-label">02 — The Strategy</div>
+  <h2 class="section-title">Make ReSolute<br>the headline.</h2>
+  <p class="section-body">When people say "I'm going to ReSolute" — not "I'm going to see Villalobos" — that's when the brand is working. Three pillars to get there.</p>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-number">01 — CONTENT</div>
+      <h3>Culture Between Events</h3>
+      <p>Stop posting only when there's an event. Build the world of ReSolute every week.</p>
+      <ul>
+        <li>Artist spotlights & stories</li>
+        <li>Behind the scenes content</li>
+        <li>Vinyl culture & music posts</li>
+        <li>Reels that get shared</li>
+        <li>Consistent posting schedule</li>
+      </ul>
+    </div>
+    <div class="pillar">
+      <div class="pillar-number">02 — COMMUNITY</div>
+      <h3>Own Your Audience</h3>
+      <p>Build a direct line to your fans that Instagram can't take away.</p>
+      <ul>
+        <li>Email list from every event</li>
+        <li>Monthly newsletter</li>
+        <li>Early ticket access for subscribers</li>
+        <li>Label releases & mixes</li>
+        <li>Direct to fan — zero algorithm</li>
+      </ul>
+    </div>
+    <div class="pillar">
+      <div class="pillar-number">03 — DESIGN</div>
+      <h3>Premium Every Time</h3>
+      <p>When every flyer looks world-class, every party feels world-class — regardless of the lineup.</p>
+      <ul>
+        <li>Animated flyers & posters</li>
+        <li>Consistent visual language</li>
+        <li>Instagram Stories & Reels</li>
+        <li>Motion design for every event</li>
+        <li>Brand elevated across touchpoints</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN WORK -->
+<section>
+  <div class="section-label">03 — Design Direction</div>
+  <h2 class="section-title">What premium<br>looks like.</h2>
+  <p class="section-body">Every visual piece ReSolute puts out is a statement. Our creative direction keeps that standard consistently high across every party, every platform, every format.</p>
+  
+  <div style="margin-top:16px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; color:#444; text-transform:uppercase;">SKY Club — Brazil</div>
+  <div class="design-showcase" style="grid-template-columns:1fr 1fr; gap:4px; margin-top:16px;">
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-f2ada99c.jpg" alt="SKY Club poster" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-f01e8c9d.jpg" alt="SKY Club mobile" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-31356d82.jpg" alt="SKY Club social" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-38a2c425.jpg" alt="SKY Club grid" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+  </div>
+
+  <div style="margin-top: 0; padding: 48px; background:#0a0e0a; border-left: 4px solid #c8f05a; margin-bottom: 4px;">
+    <div style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:4px; color:#c8f05a; text-transform:uppercase; margin-bottom:16px;">Already done for ReSolute</div>
+    <div style="font-size:28px; font-weight:700; letter-spacing:-1px; margin-bottom:12px;">Animated flyers for<br>Theo Parrish & Ricardo Villalobos</div>
+    <div style="font-size:15px; color:#666;">Their own upcoming events. Already in motion.</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:28px;">
+      <div style="background:#f0ede8; overflow:hidden;">
+        <video autoplay muted loop playsinline poster="/resolute-villa-thumb.jpg" style="width:100%; display:block;">
+          <source src="/resolute-villa.mp4" type="video/mp4">
+        </video>
+        <div style="padding:12px 16px; font-family:'Space Mono',monospace; font-size:10px; color:#555; letter-spacing:2px;">RESOLUTE × VILLA — Animated Flyer</div>
+      </div>
+      <div style="background:#f0ede8; overflow:hidden;">
+        <video autoplay muted loop playsinline poster="/resolute-theo-thumb.jpg" style="width:100%; display:block;">
+          <source src="/resolute-theo.mp4" type="video/mp4">
+        </video>
+        <div style="padding:12px 16px; font-family:'Space Mono',monospace; font-size:10px; color:#555; letter-spacing:2px;">RESOLUTE × THEO PARRISH — Animated Flyer</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:48px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; color:#444; text-transform:uppercase;">CREMA — Brazil (ft. Cabanne / Perlón Paris)</div>
+  <div class="design-showcase" style="grid-template-columns:1fr 1fr; gap:4px; margin-top:16px; margin-bottom:48px;">
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-d4ff0c80.jpg" alt="CREMA flyer" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-cb55e573.jpg" alt="CREMA Cabanne flyer" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+  </div>
+
+  <div style="margin-top:48px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; color:#c8f05a; text-transform:uppercase;">OUTPUT — Full Brand: Logo + Identity + Motion</div>
+  <div style="margin-top:8px; font-size:14px; color:#666; margin-bottom:16px;">Created the logo, visual language, storytelling, and motion design from scratch. The logo is inspired by oscilloscope sound visualization.</div>
+  <div class="design-showcase" style="grid-template-columns:1fr 1fr 1fr; gap:4px; margin-top:16px; margin-bottom:24px;">
+    <div class="design-item" style="aspect-ratio:9/16;">
+      <img src="/design-output-1.png" alt="OUTPUT logo" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:9/16;">
+      <img src="/design-output-2.png" alt="OUTPUT Gromma" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:9/16;">
+      <img src="/design-output-3.png" alt="OUTPUT Porto Alegre" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:48px;">
+    <div style="background:#e8e5e0; overflow:hidden;">
+      <img src="/output-motion-1-web.gif" alt="OUTPUT concept motion" style="width:100%; display:block;">
+      <div style="padding:12px 16px; font-family:'Space Mono',monospace; font-size:10px; color:#555; letter-spacing:2px;">01 — OSCILLOSCOPE CONCEPT</div>
+    </div>
+    <div style="background:#e8e5e0; overflow:hidden;">
+      <img src="/output-motion-2-web.gif" alt="OUTPUT logo motion" style="width:100%; display:block;">
+      <div style="padding:12px 16px; font-family:'Space Mono',monospace; font-size:10px; color:#555; letter-spacing:2px;">02 — LOGO MOTION</div>
+    </div>
+  </div>
+
+  <div style="margin-top:0; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:3px; color:#444; text-transform:uppercase;">SUBDIVISIONS — feat. Onur Özer</div>
+  <div class="design-showcase" style="grid-template-columns:1fr 1fr; gap:4px; margin-top:16px;">
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-e4c4afa4.jpg" alt="Subdivisions poster" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-9cb3be1e.jpg" alt="Subdivisions grid" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-3ce1241f.jpg" alt="Subdivisions artists" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div class="design-item" style="aspect-ratio:16/10;">
+      <img src="/design-736a8f75.jpg" alt="Subdivisions Onur Ozer" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE OFFER -->
+<section>
+  <div class="section-label">04 — The Offer</div>
+  <h2 class="section-title">What we<br>bring to the table.</h2>
+  <p class="section-body">A full-stack creative and marketing team that understands underground music culture — because we're part of it.</p>
+
+  <div class="offer-grid">
+    <div class="offer-item">
+      <h3>Marketing & Strategy</h3>
+      <ul>
+        <li>Monthly content calendar & strategy</li>
+        <li>Instagram management & growth</li>
+        <li>Email list setup & newsletter</li>
+        <li>Event promotion campaigns</li>
+        <li>Analytics & performance reporting</li>
+        <li>Community building strategy</li>
+      </ul>
+    </div>
+    <div class="offer-item">
+      <h3>Creative & Design</h3>
+      <ul>
+        <li>Animated flyers for every event</li>
+        <li>Instagram Stories & Reels content</li>
+        <li>Motion design & video editing</li>
+        <li>Visual brand consistency</li>
+        <li>Artist spotlight graphics</li>
+        <li>Full creative direction</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE ARE -->
+<section>
+  <div class="section-label">05 — Who We Are</div>
+  <h2 class="section-title">The team.</h2>
+  
+  <div class="team-grid">
+    <div class="team-item">
+      <h3>Bruno Lima</h3>
+      <div class="role">Marketing Strategy & Operations</div>
+      <p>Founder of 2FLY Digital Marketing. NYC-based. Works with brands across hospitality, events, and lifestyle. Also a DJ — understands the culture from the inside.</p>
+    </div>
+    <div class="team-item">
+      <h3>Diego Bufato</h3>
+      <div class="role">Creative Direction & Brand Design</div>
+      <p>Designer and DJ with deep roots in the underground scene. Specializes in event poster design, motion graphics, and creative content for club and music brands.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR TEASER -->
+<section style="text-align:center; border-bottom: 1px solid #ccc;">
+  <div class="section-label" style="text-align:center">Bonus Tool</div>
+  <h2 class="section-title" style="text-align:center">Know if a party<br>makes sense <span style="color:var(--accent)">before</span> you book.</h2>
+  <p class="section-body" style="margin: 0 auto 40px; text-align:center">Enter DJ fee, venue cost, ticket price, capacity — get instant break-even analysis, ad spend recommendations, and profit scenarios.</p>
+  <a href="/resolute/calculator" style="display:inline-block; background:var(--accent); color:#000; font-family:'Space Mono',monospace; font-weight:700; font-size:13px; letter-spacing:2px; text-transform:uppercase; padding:18px 48px; text-decoration:none; margin-bottom: 20px;">Try the Party P&L Calculator →</a>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2 class="cta-title">Ready to build<br>the <span>brand</span>?</h2>
+  <p class="cta-sub">Let's talk about what a partnership looks like. No long contracts — just results.</p>
+  <a href="mailto:2flydigitalmarketing@gmail.com" class="cta-button">Get In Touch</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">2FLY DIGITAL</div>
+  <div class="tagline">Confidential — Prepared exclusively for ReSolute NYC</div>
+</footer>
+
+</body>
+</html>
