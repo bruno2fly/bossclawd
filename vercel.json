@@ -1,15 +1,49 @@
 {
   "routes": [
-    { "src": "/api/webhook", "dest": "/api/webhook.js" },
-    { "src": "/api/book-consultation", "dest": "/api/book-consultation.js" },
-    { "src": "/api/send-reminders", "dest": "/api/send-reminders.js" },
-    { "src": "/proposal/mhm-digital", "dest": "/proposal/mhm-digital.html" },
-    { "src": "/welcome", "dest": "/welcome.html" },
-    { "src": "/consult", "dest": "/consult.html" },
-    { "src": "/consultation", "dest": "/consultation/index.html" },
-    { "src": "/build", "dest": "/build.html" },
-    { "src": "/quote", "dest": "/quote.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/api/webhook",
+      "dest": "/api/webhook.js"
+    },
+    {
+      "src": "/api/book-consultation",
+      "dest": "/api/book-consultation.js"
+    },
+    {
+      "src": "/api/send-reminders",
+      "dest": "/api/send-reminders.js"
+    },
+    {
+      "src": "/proposal/mhm-digital",
+      "dest": "/proposal/mhm-digital.html"
+    },
+    {
+      "src": "/welcome",
+      "dest": "/welcome.html"
+    },
+    {
+      "src": "/consult",
+      "dest": "/consult.html"
+    },
+    {
+      "src": "/consultation",
+      "dest": "/consultation/index.html"
+    },
+    {
+      "src": "/build",
+      "dest": "/build.html"
+    },
+    {
+      "src": "/quote",
+      "dest": "/quote.html"
+    },
+    {
+      "src": "/resolute",
+      "dest": "/resolute.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ],
   "crons": []
 }
