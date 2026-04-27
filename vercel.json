@@ -37,6 +37,10 @@
       "dest": "/quote.html"
     },
     {
+      "src": "/resolute/calculator",
+      "dest": "/resolute-calculator.html"
+    },
+    {
       "src": "/resolute",
       "dest": "/resolute.html"
     },

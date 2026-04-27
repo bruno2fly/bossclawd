@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Party P&L Calculator — ReSolute × 2FLY</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --black: #080808;
+    --white: #f0ede8;
+    --accent: #c8f05a;
+    --gray: #111;
+    --mid: #666;
+    --red: #ff4444;
+    --green: #c8f05a;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+  }
+
+  header {
+    padding: 32px 48px;
+    border-bottom: 1px solid #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+  header .badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 6px 14px;
+    text-transform: uppercase;
+  }
+
+  .hero {
+    padding: 60px 48px 40px;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.0;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 16px;
+    color: var(--mid);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* LEFT — INPUTS */
+  .inputs {
+    padding: 48px;
+    border-right: 1px solid #1a1a1a;
+  }
+  .inputs h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .input-group {
+    margin-bottom: 28px;
+  }
+  .input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #aaa;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+  .input-group label span {
+    color: var(--mid);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input-prefix {
+    position: absolute;
+    left: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    pointer-events: none;
+  }
+  .input-group input[type="number"], 
+  .input-group input[type="text"] {
+    width: 100%;
+    background: #111;
+    border: 1px solid #222;
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    padding: 14px 16px 14px 36px;
+    outline: none;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+  .input-group input::-webkit-outer-spin-button,
+  .input-group input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  .input-group input:focus { border-color: var(--accent); }
+
+  .section-divider {
+    height: 1px;
+    background: #1a1a1a;
+    margin: 36px 0;
+  }
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* RIGHT — OUTPUTS */
+  .outputs {
+    padding: 48px;
+    background: #050505;
+  }
+  .outputs h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+
+  .result-card {
+    background: #111;
+    padding: 28px;
+    margin-bottom: 3px;
+  }
+  .result-card.highlight {
+    background: #0e1a0e;
+    border-left: 3px solid var(--accent);
+  }
+  .result-card.danger {
+    background: #1a0e0e;
+    border-left: 3px solid var(--red);
+  }
+  .result-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .result-value {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--white);
+  }
+  .result-value.positive { color: var(--accent); }
+  .result-value.negative { color: var(--red); }
+  .result-sub {
+    font-size: 13px;
+    color: var(--mid);
+    margin-top: 6px;
+  }
+
+  .verdict {
+    margin-top: 3px;
+    padding: 32px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .verdict.go { background: #0a1a0a; color: var(--accent); }
+  .verdict.caution { background: #1a1500; color: #f0c040; }
+  .verdict.nogo { background: #1a0808; color: var(--red); }
+
+  .ad-recommendation {
+    margin-top: 3px;
+    background: #111;
+    padding: 28px;
+  }
+  .ad-recommendation h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .ad-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .ad-bar:last-child { border-bottom: none; }
+  .ad-bar-label { font-size: 14px; color: #888; }
+  .ad-bar-value { font-family: 'Space Mono', monospace; font-size: 15px; color: var(--white); }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3px;
+    margin-top: 3px;
+  }
+  .scenario {
+    background: #111;
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .scenario-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .scenario-tickets {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+  .scenario-revenue {
+    font-size: 13px;
+    color: var(--mid);
+  }
+  .scenario.bad .scenario-tickets { color: var(--red); }
+  .scenario.ok .scenario-tickets { color: #f0c040; }
+  .scenario.great .scenario-tickets { color: var(--accent); }
+
+  footer {
+    padding: 32px 48px;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #333;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .main { grid-template-columns: 1fr; }
+    .inputs { border-right: none; border-bottom: 1px solid #1a1a1a; }
+    header, .hero, .inputs, .outputs, footer { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ReSolute × 2FLY — Party P&L</div>
+  <div class="badge">Prototype</div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Event Profitability Calculator</div>
+  <h1>Know before<br>you book.</h1>
+  <p>Input your event costs and capacity. Get an instant breakdown of what you need to sell, how much to spend on ads, and whether the party makes financial sense.</p>
+</div>
+
+<div class="main">
+
+  <!-- INPUTS -->
+  <div class="inputs">
+    <h2>Event Details</h2>
+
+    <div class="section-title">Costs</div>
+
+    <div class="input-group">
+      <label>Headliner Fee <span>main DJ / artist</span></label>
+      <div class="input-wrapper">
+        <span class="input-prefix">$</span>
+        <input type="number" id="djFee" value="20000" oninput="calculate()">
+      </div>
+    </div>
+
+    <div class="input-row">
+      <div class="input-group">
+        <label>Venue Cost</label>
+        <div class="input-wrapper">
+          <span class="input-prefix">$</span>
+          <input type="number" id="venueCost" value="5000" oninput="calculate()">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Production</label>
+        <div class="input-wrapper">
+          <span class="input-prefix">$</span>
+          <input type="number" id="productionCost" value="3000" oninput="calculate()">
+        </div>
+      </div>
+    </div>
+
+    <div class="input-row">
+      <div class="input-group">
+        <label>Staff / Security</label>
+        <div class="input-wrapper">
+          <span class="input-prefix">$</span>
+          <input type="number" id="staffCost" value="1500" oninput="calculate()">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Other Costs</label>
+        <div class="input-wrapper">
+          <span class="input-prefix">$</span>
+          <input type="number" id="otherCost" value="500" oninput="calculate()">
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+    <div class="section-title">Tickets & Capacity</div>
+
+    <div class="input-row">
+      <div class="input-group">
+        <label>Venue Capacity</label>
+        <div class="input-wrapper">
+          <span class="input-prefix" style="color:#888">#</span>
+          <input type="number" id="capacity" value="500" oninput="calculate()">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Avg Ticket Price</label>
+        <div class="input-wrapper">
+          <span class="input-prefix">$</span>
+          <input type="number" id="ticketPrice" value="30" oninput="calculate()">
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Bar Revenue Per Person <span>estimated avg spend</span></label>
+      <div class="input-wrapper">
+        <span class="input-prefix">$</span>
+        <input type="number" id="barRevenue" value="25" oninput="calculate()">
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+    <div class="section-title">Marketing Budget</div>
+
+    <div class="input-group">
+      <label>Total Marketing Budget <span>all channels</span></label>
+      <div class="input-wrapper">
+        <span class="input-prefix">$</span>
+        <input type="number" id="marketingBudget" value="2000" oninput="calculate()">
+      </div>
+    </div>
+
+  </div>
+
+  <!-- OUTPUTS -->
+  <div class="outputs">
+    <h2>Projections</h2>
+
+    <div class="result-card highlight">
+      <div class="result-label">Break-Even Tickets</div>
+      <div class="result-value positive" id="breakEven">—</div>
+      <div class="result-sub" id="breakEvenPct">tickets needed to cover all costs</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-label">Total Costs</div>
+      <div class="result-value" id="totalCosts">—</div>
+      <div class="result-sub">including marketing budget</div>
+    </div>
+
+    <div class="result-card">
+      <div class="result-label">Max Revenue (Sold Out)</div>
+      <div class="result-value" id="maxRevenue">—</div>
+      <div class="result-sub">tickets + bar at full capacity</div>
+    </div>
+
+    <div class="result-card highlight">
+      <div class="result-label">Profit at Sold Out</div>
+      <div class="result-value" id="soldOutProfit">—</div>
+      <div class="result-sub" id="marginText">net margin</div>
+    </div>
+
+    <div id="verdict" class="verdict go">—</div>
+
+    <div class="ad-recommendation">
+      <h3>Ad Spend Recommendation</h3>
+      <div class="ad-bar">
+        <span class="ad-bar-label">Instagram / Meta Ads</span>
+        <span class="ad-bar-value" id="metaAds">—</span>
+      </div>
+      <div class="ad-bar">
+        <span class="ad-bar-label">Influencer / Promo</span>
+        <span class="ad-bar-value" id="influencerAds">—</span>
+      </div>
+      <div class="ad-bar">
+        <span class="ad-bar-label">Email / Community</span>
+        <span class="ad-bar-value" id="emailBudget">—</span>
+      </div>
+      <div class="ad-bar">
+        <span class="ad-bar-label">Cost Per Ticket Sold (target)</span>
+        <span class="ad-bar-value" id="cpt">—</span>
+      </div>
+    </div>
+
+    <div class="scenario-grid">
+      <div class="scenario bad">
+        <div class="scenario-name">50% Sold</div>
+        <div class="scenario-tickets" id="s50tickets">—</div>
+        <div class="scenario-revenue" id="s50revenue">—</div>
+      </div>
+      <div class="scenario ok">
+        <div class="scenario-name">75% Sold</div>
+        <div class="scenario-tickets" id="s75tickets">—</div>
+        <div class="scenario-revenue" id="s75revenue">—</div>
+      </div>
+      <div class="scenario great">
+        <div class="scenario-name">Sold Out</div>
+        <div class="scenario-tickets" id="s100tickets">—</div>
+        <div class="scenario-revenue" id="s100revenue">—</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span>RESOLUTE × 2FLY DIGITAL</span>
+  <span>PARTY P&L CALCULATOR — PROTOTYPE</span>
+</footer>
+
+<script>
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString();
+}
+function fmtN(n) {
+  return Math.round(n).toLocaleString();
+}
+
+function calculate() {
+  const djFee = parseFloat(document.getElementById('djFee').value) || 0;
+  const venueCost = parseFloat(document.getElementById('venueCost').value) || 0;
+  const productionCost = parseFloat(document.getElementById('productionCost').value) || 0;
+  const staffCost = parseFloat(document.getElementById('staffCost').value) || 0;
+  const otherCost = parseFloat(document.getElementById('otherCost').value) || 0;
+  const capacity = parseFloat(document.getElementById('capacity').value) || 1;
+  const ticketPrice = parseFloat(document.getElementById('ticketPrice').value) || 0;
+  const barRevenue = parseFloat(document.getElementById('barRevenue').value) || 0;
+  const marketingBudget = parseFloat(document.getElementById('marketingBudget').value) || 0;
+
+  const totalCosts = djFee + venueCost + productionCost + staffCost + otherCost + marketingBudget;
+  const revenuePerPerson = ticketPrice + barRevenue;
+  const breakEven = revenuePerPerson > 0 ? totalCosts / revenuePerPerson : 0;
+  const breakEvenPct = capacity > 0 ? (breakEven / capacity * 100) : 0;
+  const maxRevenue = capacity * revenuePerPerson;
+  const soldOutProfit = maxRevenue - totalCosts;
+  const margin = maxRevenue > 0 ? (soldOutProfit / maxRevenue * 100) : 0;
+
+  // Scenarios
+  const s50 = Math.round(capacity * 0.5);
+  const s75 = Math.round(capacity * 0.75);
+  const s100 = Math.round(capacity);
+  const rev50 = s50 * revenuePerPerson - totalCosts;
+  const rev75 = s75 * revenuePerPerson - totalCosts;
+  const rev100 = soldOutProfit;
+
+  // Ad allocation
+  const metaAds = marketingBudget * 0.55;
+  const influencerAds = marketingBudget * 0.30;
+  const emailBudget = marketingBudget * 0.15;
+  const cpt = breakEven > 0 ? marketingBudget / breakEven : 0;
+
+  // Update UI
+  document.getElementById('breakEven').textContent = fmtN(breakEven) + ' tickets';
+  document.getElementById('breakEvenPct').textContent = Math.round(breakEvenPct) + '% of capacity to break even';
+  document.getElementById('totalCosts').textContent = fmt(totalCosts);
+  document.getElementById('maxRevenue').textContent = fmt(maxRevenue);
+
+  const profitEl = document.getElementById('soldOutProfit');
+  profitEl.textContent = fmt(soldOutProfit);
+  profitEl.className = 'result-value ' + (soldOutProfit >= 0 ? 'positive' : 'negative');
+  document.getElementById('marginText').textContent = Math.round(margin) + '% net margin at sold out';
+
+  // Verdict
+  const verdictEl = document.getElementById('verdict');
+  if (breakEvenPct <= 60) {
+    verdictEl.textContent = '✓ Strong Setup — Break-even at ' + Math.round(breakEvenPct) + '% capacity';
+    verdictEl.className = 'verdict go';
+  } else if (breakEvenPct <= 80) {
+    verdictEl.textContent = '⚠ Tight Margins — Need ' + Math.round(breakEvenPct) + '% sold to break even';
+    verdictEl.className = 'verdict caution';
+  } else {
+    verdictEl.textContent = '✗ High Risk — Needs ' + Math.round(breakEvenPct) + '% capacity to break even';
+    verdictEl.className = 'verdict nogo';
+  }
+
+  document.getElementById('metaAds').textContent = fmt(metaAds);
+  document.getElementById('influencerAds').textContent = fmt(influencerAds);
+  document.getElementById('emailBudget').textContent = fmt(emailBudget);
+  document.getElementById('cpt').textContent = fmt(cpt) + ' / ticket';
+
+  document.getElementById('s50tickets').textContent = fmtN(s50) + ' ppl';
+  document.getElementById('s50revenue').textContent = (rev50 >= 0 ? '+' : '') + fmt(rev50);
+  document.getElementById('s75tickets').textContent = fmtN(s75) + ' ppl';
+  document.getElementById('s75revenue').textContent = (rev75 >= 0 ? '+' : '') + fmt(rev75);
+  document.getElementById('s100tickets').textContent = fmtN(s100) + ' ppl';
+  document.getElementById('s100revenue').textContent = (rev100 >= 0 ? '+' : '') + fmt(rev100);
+}
+
+// Run on load
+calculate();
+</script>
+
+</body>
+</html>
