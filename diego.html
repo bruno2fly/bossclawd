@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diego Bufato — Creative Direction & Brand Design</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #f5f4f0;
+    color: #111;
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+  }
+
+  header {
+    padding: 40px 60px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .name {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  .role {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #888;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .tags {
+    font-size: 13px;
+    color: #aaa;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* CASE SECTION */
+  .case {
+    padding: 80px 60px;
+    border-bottom: 1px solid #ddd;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .case-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #aaa;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .case-client {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .case-desc {
+    font-size: 15px;
+    color: #888;
+    margin-bottom: 48px;
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .work-item {
+    background: #eee;
+    overflow: hidden;
+    position: relative;
+  }
+  .work-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .work-item video {
+    width: 100%;
+    display: block;
+  }
+  .work-caption {
+    padding: 14px 20px;
+    background: #f0ede8;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #888;
+    text-transform: uppercase;
+    border-top: 1px solid #ddd;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 48px;
+  }
+  .about-text {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #555;
+    max-width: 520px;
+    font-weight: 300;
+  }
+  .about-link {
+    display: inline-block;
+    margin-top: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 1px solid #111;
+    padding-bottom: 2px;
+  }
+  .about-link:hover { opacity: 0.6; }
+
+  footer {
+    padding: 32px 60px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #bbb;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 768px) {
+    header, .case, .about, footer { padding: 40px 24px; }
+    .work-grid { grid-template-columns: 1fr; }
+    .about { flex-direction: column; }
+    header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .tags { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="name">Diego Bufato</div>
+    <div class="role">Creative Direction & Brand Design</div>
+  </div>
+  <div class="tags">
+    Event poster design<br>
+    Motion graphics<br>
+    Brand identity
+  </div>
+</header>
+
+<div class="case">
+  <div class="case-label">Case Study — 2026</div>
+  <div class="case-client">ReSolute NYC</div>
+  <div class="case-desc">First delivery — static flyer + animated motion for upcoming events.</div>
+
+  <div class="work-grid">
+    <div class="work-item">
+      <img src="/diego-resolute-flyer.png" alt="ReSolute flyer by Diego Bufato">
+      <div class="work-caption">Static Flyer — Print & Digital</div>
+    </div>
+    <div class="work-item">
+      <video autoplay muted loop playsinline poster="/diego-resolute-thumb.jpg">
+        <source src="/diego-resolute-video.mp4" type="video/mp4">
+      </video>
+      <div class="work-caption">Motion — 10s Animated Version</div>
+    </div>
+  </div>
+</div>
+
+<div class="about">
+  <div>
+    <p class="about-text">Designer and DJ based in Brazil. Creating visual identities for underground music events.</p>
+    <a href="https://www.behance.net/diegobufato" target="_blank" class="about-link">↗ Ver portfolio completo</a>
+  </div>
+</div>
+
+<footer>
+  <span>DIEGO BUFATO</span>
+  <span>× 2FLY DIGITAL</span>
+</footer>
+
+</body>
+</html>

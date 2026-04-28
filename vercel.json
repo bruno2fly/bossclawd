@@ -69,6 +69,10 @@
       "dest": "/resolute-v2.html"
     },
     {
+      "src": "/diego",
+      "dest": "/diego.html"
+    },
+    {
       "src": "/resolute",
       "dest": "/resolute.html"
     },
